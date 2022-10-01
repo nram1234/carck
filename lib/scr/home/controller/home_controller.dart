@@ -1,4 +1,3 @@
-
 import 'package:carck/scr/home/home_tap1.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,15 +6,10 @@ import '../home_tap2.dart';
 import '../home_tap3.dart';
 import '../home_tap4.dart';
 
-
-
-
-
 class HomeViwController extends GetxController {
-
   int _navigatorValue = 0;
   String _currentPage = 'Page1';
-    late var _navigatorKey;
+  late var _navigatorKey;
 
   List<String> _pageKeys = ['Page1', 'Page2', 'Page3', 'Page4'];
 
@@ -33,16 +27,16 @@ class HomeViwController extends GetxController {
     'Page2': GlobalKey<NavigatorState>(),
     'Page3': GlobalKey<NavigatorState>(),
     'Page4': GlobalKey<NavigatorState>(),
-   // 'Page5': GlobalKey<NavigatorState>(),
+    // 'Page5': GlobalKey<NavigatorState>(),
   };
 
-  Widget currentScreen=Container();
+  Widget currentScreen = Container();
 
   @override
   void onInit() {
     super.onInit();
     currentScreen = PageToView(
-      naigatorKey: _navigatorKeys[_pageKeys[0]]! ,
+      naigatorKey: _navigatorKeys[_pageKeys[0]]!,
       tabItem: _pageKeys[0],
     ); //=HomeView();
   }
@@ -64,7 +58,7 @@ class HomeViwController extends GetxController {
     return Offstage(
       offstage: _currentPage != tabItem,
       child: PageToView(
-        naigatorKey: _navigatorKeys[tabItem]! ,
+        naigatorKey: _navigatorKeys[tabItem]!,
         tabItem: tabItem,
       ),
     );
@@ -74,67 +68,85 @@ class HomeViwController extends GetxController {
     // Get.to(() => MenuView());
   }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  List<String> list = ["طلبات منتظره","طلبات حالية", "طلبات سابقه"  ];
+  List<String> list = ["طلبات منتظره", "طلبات حالية", "طلبات سابقه"];
   int index = 0;
   PageController controller = PageController(initialPage: 0);
 
+  updatePageController(int i) {
+    print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii   =>$i");
+    index = i;
+
+    controller.jumpToPage(i);
+    // controller.animateToPage(i,
+    //     curve: Curves.bounceInOut,
+    //     duration: Duration(milliseconds: 200)).then((value) {
+    //   update();
+    // });
+    update();
+  }
+
+  customBottomSheet({required Size size, required context}) {
+    return showModalBottomSheet(
+        isScrollControlled: true,
+        enableDrag: true,
+        isDismissible: true,
+        backgroundColor: Colors.transparent,
+        shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.vertical(top: Radius.circular(25))),
+        context: context,
+        builder: (context) {
+          return Container(
+            height: size.height * .85,
+            width: double.infinity,
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.vertical(top: Radius.circular(15)),
+                color: Colors.white),
+            child: Column(children: [
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pop();
+                        },
+                        child: Align(
+                            alignment: Alignment.topRight,
+                            child: Icon(Icons.clear))),
+                    Text(
+                      "تفاصبل الطلب",
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    )
+                  ],
+                ),
+              ),
 
 
-updatePageController(int i){
 
+          Card(elevation: 8,child: Cu,)
 
-  print("iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii   =>$i");
-  index = i;
+            ]),
+          );
+        });
+  }
 
-controller.jumpToPage(i);
-  // controller.animateToPage(i,
-  //     curve: Curves.bounceInOut,
-  //     duration: Duration(milliseconds: 200)).then((value) {
-  //   update();
-  // });
-update();
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+  customBottomSheet2({
+    required Size size,
+  }) {
+    Get.bottomSheet(Container(
+      height: size.height * .8,
+      width: size.width,
+      color: Colors.redAccent,
+    ));
+  }
 }
 
 class PageToView extends StatelessWidget {
   late GlobalKey<NavigatorState> naigatorKey;
   late String tabItem;
 
-    PageToView({  required this.naigatorKey,   required this.tabItem});
+  PageToView({required this.naigatorKey, required this.tabItem});
 
   @override
   Widget build(BuildContext context) {
@@ -160,11 +172,9 @@ class PageToView extends StatelessWidget {
         }
       case 'Page4':
         {
-
           currentScreen = HomeTap4();
           break;
         }
-
     }
 
     return Navigator(

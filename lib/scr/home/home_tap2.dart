@@ -1,3 +1,4 @@
+import 'package:carck/utility/all_enum_class.dart';
 import 'package:carck/utility/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -86,23 +87,25 @@ class HomeTap2 extends GetView<HomeViwController> {
                       logic.updatePageController(v);
                     },
                     children: <Widget>[
-                      Container(
-                          child: ListView.builder(
-                              itemCount: 1,
-                              itemBuilder: (context, pos) {
-                                return CustomListViewItem();
-                              })),
+                      Directionality(textDirection: TextDirection.rtl,
+                        child: Container(
+                            child: ListView.builder(
+                                itemCount: 1,
+                                itemBuilder: (context, pos) {
+                                  return CustomListViewItem(itemListType: ItemListType.waiting,);
+                                })),
+                      ),
                       Container(
                           child: ListView.builder(
                               itemCount: 2,
                               itemBuilder: (context, pos) {
-                                return CustomListViewItem();
+                                return CustomListViewItem(itemListType: ItemListType.employment,);
                               })),
                       Container(
                           child: ListView.builder(
                               itemCount: 3,
                               itemBuilder: (context, pos) {
-                                return CustomListViewItem();
+                                return CustomListViewItem(itemListType:  ItemListType.finished,);
                                 ;
                               })),
                     ],

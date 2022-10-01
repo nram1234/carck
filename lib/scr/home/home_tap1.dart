@@ -1,3 +1,4 @@
+import 'package:carck/utility/all_enum_class.dart';
 import 'package:flutter/material.dart';
 
 import '../../sheardWidgets/custom_button.dart';
@@ -103,7 +104,7 @@ class HomeTap1 extends StatelessWidget {
           child: ListView.builder(
               itemCount: 50,
               itemBuilder: (context, pos) {
-                return CustomListViewItem();
+                return CustomListViewItem(itemListType: ItemListType.waiting,);
               }),
         ))
       ]),
