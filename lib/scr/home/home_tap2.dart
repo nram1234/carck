@@ -34,7 +34,10 @@ class HomeTap2 extends GetView<HomeViwController> {
                       SizedBox(
                         width: 8,
                       ),
-                      Icon(Icons.arrow_forward),
+                      GestureDetector(onTap: (){
+
+                        controller.changeSelectedValue(0);
+                      },child: Icon(Icons.arrow_forward)),
                       SizedBox(
                         width: 20,
                       )

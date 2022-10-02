@@ -14,7 +14,9 @@ static Color lightGreyColor =  Color.fromRGBO(223,223,223,1);
 static Color lightGreyColor2 =  Color(0xffcbcbcb);
 static Color lightGreyColor3=  Color(0xffeceaea);
 static Color grey=  Color(0xff888888);
-
+static Color blueColor  =  HexColor("#00ADEF");
+static Color LinearGradient1  =  HexColor("#FEEBD5");
+static Color LinearGradient2  =  HexColor("#C99F6D");
 
 
 
