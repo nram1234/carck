@@ -25,7 +25,7 @@ class HomeTap3 extends GetView<HomeViwController> {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
-                      Text("الطلبات", style: TextStyle(fontSize: 17)),
+                      Text("المحفظة", style: TextStyle(fontSize: 17)),
                       SizedBox(
                         width: 8,
                       ),

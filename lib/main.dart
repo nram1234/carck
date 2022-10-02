@@ -32,7 +32,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.blue, textTheme: GoogleFonts.tajawalTextTheme(),
       ),
       //home:   HomeSCR()//LogInSCR( ),//
-        initialRoute: "/Home"
+        initialRoute: "/"
       ,getPages: [
       GetPage(name: "/", page: () =>
         LogInSCR(),

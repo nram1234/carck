@@ -9,6 +9,15 @@ import '../home_tap3.dart';
 import '../home_tap4.dart';
 
 class HomeViwController extends GetxController {
+
+  TextEditingController textEditingControllerProfileName=TextEditingController();
+  TextEditingController textEditingControllerProfileEmail=TextEditingController();
+  TextEditingController textEditingControllerProfilePhone=TextEditingController();
+  TextEditingController textEditingControllerProfileAddrs=TextEditingController();
+
+
+
+
   int _navigatorValue = 0;
   String _currentPage = 'Page1';
   late var _navigatorKey;
