@@ -9,8 +9,8 @@ class AuthMiddleWare extends GetMiddleware {
 
   @override
   RouteSettings? redirect(String? route) {
-    print("token in start ${SecureStorage.readSecureData(AllStringConst.Token)}");
-    if (SecureStorage.readSecureData(AllStringConst.Token) != null) {
+    print("token in start ${SecureStorage.readSecureData(AllStringConst.id)}");
+    if (SecureStorage.readSecureData(AllStringConst.id) != null) {
       return const RouteSettings(name: "/Home");
 
     }

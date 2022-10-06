@@ -1,13 +1,27 @@
+import 'package:carck/scr/all_binding/login_binding.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'middleware/auth_middleware.dart';
-import 'scr/home/binding/agenda_binding.dart';
+import 'scr/home/binding/Home_binding.dart';
 import 'scr/home/home_scr.dart';
 import 'scr/login_scr/ui/login_scr.dart';
 
-void main() {
+
+
+void main() async{
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+
+  await FirebaseMessaging.instance;
+  await GetStorage.init();
+
   runApp(const MyApp());
 }
 
@@ -35,7 +49,7 @@ class MyApp extends StatelessWidget {
         initialRoute: "/"
       ,getPages: [
       GetPage(name: "/", page: () =>
-        LogInSCR(),
+        LogInSCR(),binding: LogInBinding(),
           middlewares: [
             AuthMiddleWare()
           ]
@@ -45,12 +59,10 @@ class MyApp extends StatelessWidget {
       GetPage(name: "/Home", page: () =>
           HomeSCR(),
           binding: HomeBinding())
+
+
+
       ,
-      // GetPage(name: "/Login", page: () =>
-      //     Login(),
-      //     binding: LoginBinding())
-      //
-      // ,
       // GetPage(name: "/HolidayRequest", page: () =>
       //     HolidayRequestScr(),
       //     binding: HolidayRequestBinding())

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "657721416498",
+    "project_id": "carck-agents",
+    "storage_bucket": "carck-agents.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:657721416498:android:a9d321252a8b4b5fe2952b",
+        "android_client_info": {
+          "package_name": "com.nram.carck"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "657721416498-gmqagcnv6gd1fr91be2fpjuje2uv8e8b.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.nram.carck",
+            "certificate_hash": "e91710c2220e09332783657d7bd99f0e35d63ee1"
+          }
+        },
+        {
+          "client_id": "657721416498-k5g0e3p55dn0c9uihql8gin891jm5033.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAInBlIu_rNIXpwWGtYuwGWvAmQ8ldtVtM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "657721416498-k5g0e3p55dn0c9uihql8gin891jm5033.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
