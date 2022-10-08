@@ -3,7 +3,13 @@ import 'package:carck/utility/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../../netWork/apis/get_order_details_api.dart';
+import '../../../netWork/apis/home_api.dart';
+import '../../../netWork/models/get_order_details_model.dart';
+import '../../../netWork/models/home_model.dart';
 import '../../../sheardWidgets/custom_button.dart';
+import '../../../utility/all_string_const.dart';
+import '../../../utility/storage.dart';
 import '../home_tap2.dart';
 import '../home_tap3.dart';
 import '../home_tap4.dart';
@@ -50,7 +56,57 @@ class HomeViwController extends GetxController {
       naigatorKey: _navigatorKeys[_pageKeys[0]]!,
       tabItem: _pageKeys[0],
     ); //=HomeView();
+    getHomedata();
   }
+
+
+  HomeModel? homeModel;
+  getHomedata()async{
+    HomeAPI homeAPI=HomeAPI();
+
+    Map <String,dynamic>a={};
+    a['id_agent']  =  SecureStorage.readSecureDataINT(AllStringConst.id);
+
+    a['key']  = '1234567890';
+
+    homeAPI.post(a).then((value) {
+homeModel=value as HomeModel;
+update();
+    });
+  }
+
+bool isGetOrderDetails=false;
+  GetOrderDetailsModel? getOrderDetailsModel;
+  getGetOrderDetails({required id_order,required Size size,required BuildContext context ,updateId})async{
+    isGetOrderDetails=true;
+    update([updateId]);
+    GetOrderDetailsAPI homeAPI=GetOrderDetailsAPI();
+
+    Map <String,dynamic>a={};
+    a['id_agent']  =  SecureStorage.readSecureDataINT(AllStringConst.id);
+
+    a['key']  = '1234567890';
+    a['id_order']  = id_order;
+    homeAPI.post(a).then((value) {
+      getOrderDetailsModel=value as GetOrderDetailsModel;
+      customBottomSheet(size: size,context: context);
+      isGetOrderDetails=false;
+      update([updateId]);
+      //update();
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
 
   changeSelectedValue(int selectedValue) {
     _navigatorValue = selectedValue;
@@ -150,14 +206,11 @@ class HomeViwController extends GetxController {
                                 style: TextStyle(fontSize: 16),
                               ),
                               Text(
-                                "No.#1893",
+                                "No.#${getOrderDetailsModel!.result!.orderDetails![0].idOrder}",
                                 style: TextStyle(
                                     fontSize: 24, color: ColorApp.blueColor),
                               ),
-                              Text(
-                                "Apr 11, 2021 2:00PM",
-                                style: TextStyle(fontSize: 12),
-                              ),
+
                               SizedBox(
                                 height: 8,
                               ),
@@ -173,16 +226,16 @@ class HomeViwController extends GetxController {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Expanded(
-                                      flex: 3,
+                                      flex: 1,
                                       child: Text(
-                                        "محمد أحمد",
+                                        "${getOrderDetailsModel!.result!.orderDetails![0].date}",
                                         style: TextStyle(fontSize: 15),
                                         textAlign: TextAlign.right,
                                       )),
                                   Expanded(
                                       flex: 1,
                                       child: Text(
-                                        ": الاسم",
+                                        ": تاريخ الطلب",
                                         style: TextStyle(fontSize: 15),
                                         textAlign: TextAlign.right,
                                       )),
@@ -192,16 +245,16 @@ class HomeViwController extends GetxController {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Expanded(
-                                      flex: 3,
+                                      flex: 1,
                                       child: Text(
-                                        "966123456789",
+                                        "${getOrderDetailsModel!.result!.orderDetails![0].totalPrice}",
                                         style: TextStyle(fontSize: 15),
                                         textAlign: TextAlign.right,
                                       )),
                                   Expanded(
                                       flex: 1,
                                       child: Text(
-                                        ": الجوال",
+                                        ": اجمالي الطلب",
                                         style: TextStyle(fontSize: 15),
                                         textAlign: TextAlign.right,
                                       )),
@@ -211,16 +264,16 @@ class HomeViwController extends GetxController {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   Expanded(
-                                      flex: 3,
+                                      flex: 1,
                                       child: Text(
-                                        "2-10-2022",
+                                        "${getOrderDetailsModel!.result!.orderDetails![0].totalProduct}",
                                         style: TextStyle(fontSize: 15),
                                         textAlign: TextAlign.right,
                                       )),
                                   Expanded(
                                       flex: 1,
                                       child: Text(
-                                        ": العنوان",
+                                        ": عدد الطلبات",
                                         style: TextStyle(fontSize: 15),
                                         textAlign: TextAlign.right,
                                       )),
@@ -263,54 +316,139 @@ class HomeViwController extends GetxController {
                   //       );
                   //     })
                   // ,
-
+SizedBox(height: 20,),
                   ...List<Widget>.generate(
-                      5,
-                      (i) => SizedBox(
-                            width: size.width * .9,
-                            child: Directionality(
-                              textDirection: TextDirection.rtl,
-                              child: Row(
-                                children: [
-                                  Image.network(
-                                    "https://5.imimg.com/data5/CM/AV/LJ/SELLER-68434442/designer-bedroom-furniture-1000x1000.jpg",
-                                    width: 50,
-                                    height: 50,
-                                  ),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Expanded(
-                                      flex: 3,
-                                      child: Text("okokjokookokkokkoko")),
-                                  SizedBox(
-                                    width: 4,
-                                  ),
-                                  Expanded(
-                                      flex: 1,
-                                      child: Center(child: Text("$i  \$")))
-                                ],
-                              ),
-                            ),
-                          )),
+                      getOrderDetailsModel!.result!.allProducts!.length,
+                      (i) => Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: Card(elevation: 8,
+                          child: SizedBox(
+                                width: size.width * .9,
+                                child:Padding(
+                                  padding: const EdgeInsets.all(0.0),
+                                  child: Column(
+                                    children: [
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Directionality(textDirection: TextDirection.rtl,
+                                          child: Row(
+                                            children: [
+                                              Image.network(
+                                                getOrderDetailsModel!.result!.allProducts![i].image!,
+                                                width: 75,
+                                                height: 75,
+                                              ),
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Expanded(
+                                                  flex: 3,
+                                                  child: Text(    getOrderDetailsModel!.result!.allProducts![i].productName!)),
+                                              SizedBox(
+                                                width: 4,
+                                              ),
+                                              Expanded(
+                                                  flex: 1,
+                                                  child: Center(child: Text("${    getOrderDetailsModel!.result!.allProducts![i].price}  \$")))
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  "${getOrderDetailsModel!.result!.allProducts![i].providerName}",
+                                                  style: TextStyle(fontSize: 15),
+                                                  textAlign: TextAlign.right,
+                                                )),
+                                            Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  ": اسم البايع",
+                                                  style: TextStyle(fontSize: 15),
+                                                  textAlign: TextAlign.right,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
 
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  "${getOrderDetailsModel!.result!.allProducts![i].providerAddress}",
+                                                  style: TextStyle(fontSize: 15),
+                                                  textAlign: TextAlign.right,
+                                                )),
+                                            Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  ": عنوان البايع",
+                                                  style: TextStyle(fontSize: 15),
+                                                  textAlign: TextAlign.right,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+
+                                      Padding(
+                                        padding: const EdgeInsets.all(4.0),
+                                        child: Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Expanded(
+                                                flex: 3,
+                                                child: Text(
+                                                  "${getOrderDetailsModel!.result!.allProducts![i].providerPhone}",
+                                                  style: TextStyle(fontSize: 15),
+                                                  textAlign: TextAlign.right,
+                                                )),
+                                            Expanded(
+                                                flex: 1,
+                                                child: Text(
+                                                  ": تلفون البايع",
+                                                  style: TextStyle(fontSize: 15),
+                                                  textAlign: TextAlign.right,
+                                                )),
+                                          ],
+                                        ),
+                                      ),
+
+
+
+                                    ],
+                                  ),
+                                ),
+                              ),
+                        ),
+                      )),
+SizedBox(height: 10,),
                   SizedBox(
                     width: size.width * .9,
                     child: Column(
                       children: [
-                        Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Row(
-                            children: [
-                              Text("السعر"),
-                              Spacer(),
-                              Text(
-                                "500987767  \$",
-                                style: TextStyle(color: ColorApp.primaryColor),
-                              )
-                            ],
-                          ),
-                        ),
+                        // Directionality(
+                        //   textDirection: TextDirection.rtl,
+                        //   child: Row(
+                        //     children: [
+                        //       Text("السعر"),
+                        //       Spacer(),
+                        //       Text(
+                        //         "${    getOrderDetailsModel!.result!.orderDetails![0].totalPrice}  \$",
+                        //         style: TextStyle(color: ColorApp.primaryColor),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         Directionality(
                           textDirection: TextDirection.rtl,
                           child: Row(
@@ -318,25 +456,25 @@ class HomeViwController extends GetxController {
                               Text("خدمة التوصيل"),
                               Spacer(),
                               Text(
-                                "500987767  \$",
-                                style: TextStyle(color: ColorApp.primaryColor),
+                                "${getOrderDetailsModel!.result!.orderDetails![0].shippingCharges}  ${getOrderDetailsModel!.result!.orderDetails![0].currencyName} ",
+                                style: TextStyle(color: ColorApp.primaryColor,fontSize: 16,fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
                         ),
-                        Directionality(
-                          textDirection: TextDirection.rtl,
-                          child: Row(
-                            children: [
-                              Text("قسيمة الخصم"),
-                              Spacer(),
-                              Text(
-                                "500987767  \$",
-                                style: TextStyle(color: ColorApp.primaryColor),
-                              )
-                            ],
-                          ),
-                        ),
+                        // Directionality(
+                        //   textDirection: TextDirection.rtl,
+                        //   child: Row(
+                        //     children: [
+                        //       Text("قسيمة الخصم"),
+                        //       Spacer(),
+                        //       Text(
+                        //         "${getOrderDetailsModel!.result!.orderDetails![0].}  \$",
+                        //         style: TextStyle(color: ColorApp.primaryColor),
+                        //       )
+                        //     ],
+                        //   ),
+                        // ),
                         Directionality(
                           textDirection: TextDirection.rtl,
                           child: Row(
@@ -344,8 +482,8 @@ class HomeViwController extends GetxController {
                               Text("الاجمالي"),
                               Spacer(),
                               Text(
-                                "500987767  \$",
-                                style: TextStyle(color: ColorApp.primaryColor),
+                                "${getOrderDetailsModel!.result!.orderDetails![0].totalPrice}  \$",
+                                  style: TextStyle(color: ColorApp.primaryColor,fontSize: 16,fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
@@ -490,6 +628,11 @@ class PageToView extends StatelessWidget {
       },
     );
   }
+
+
+
+
+
 }
 //
 // Widget build(BuildContext context) {

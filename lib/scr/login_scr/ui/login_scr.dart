@@ -51,7 +51,7 @@ class LogInSCR extends StatelessWidget {
                             SizedBox(
                               height: 20,
                             ),
-                            TextFormField(
+                            TextFormField( controller:  logic.phone,
                               style: TextStyle(color: Colors.black),
                               textAlign: TextAlign.right,
                               //validator: controller.nameValidator,controller:controller.username,
@@ -82,7 +82,7 @@ class LogInSCR extends StatelessWidget {
                             SizedBox(
                               height: 20,
                             ),
-                            TextFormField(
+                            TextFormField(controller: logic.password,
                               obscureText: true,
                               style: TextStyle(color: Colors.black),
                               textAlign: TextAlign.right,
@@ -124,13 +124,11 @@ class LogInSCR extends StatelessWidget {
                             SizedBox(
                               height: 20,
                             ),
-                            CustomButton(
+                          logic.islogin?const Center(child: CircularProgressIndicator(),):  CustomButton(
                               width: double.infinity,
                               height: 50,
                               title: "تسجيل الدخول",
-                              onClick: () {
-                                Get.offAllNamed("Home");
-                              },
+                              onClick:logic.logIng,
                               buttonColor: ColorApp.primaryColor,
                               fontWeight: FontWeight.bold,
                               fontSize: 17,

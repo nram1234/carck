@@ -5,7 +5,17 @@ import 'package:get_storage/get_storage.dart';
 class SecureStorage {
 
   static final   box = GetStorage();
+  static Future? writeSecureDataINT({required String key,required int value})  async {
 
+print("hhhhhhhhhhhh    $key                   $value");
+    var writeData = await box.write( key,value);
+    return writeData;
+  }
+  static  int? readSecureDataINT(String key)   {
+
+    var readData =   box.read( key);
+    return readData;
+  }
  static Future? writeSecureData({required String key,required String value})  async {
 
 

@@ -1,7 +1,7 @@
 import 'package:carck/netWork/abstract_json_resource.dart';
 
 class LogInModel extends AbstractJsonResource{
-  bool? message;
+  String? message;
   int? codenum;
   bool? status;
   Result? result;
@@ -9,11 +9,11 @@ class LogInModel extends AbstractJsonResource{
   LogInModel({this.message, this.codenum, this.status, this.result});
 
   LogInModel.fromJson(Map<String, dynamic> json) {
-    message = json['message'];
+    message = json['message'].toString();
     codenum = json['codenum'];
     status = json['status'];
     result =
-    json['result'] != null ? new Result.fromJson(json['result']) : null;
+    json['result'] != null ? Result.fromJson(json['result']) : null;
   }
 
   Map<String, dynamic> toJson() {

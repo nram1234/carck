@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 
+import '../netWork/models/home_model.dart';
 import '../scr/home/controller/home_controller.dart';
 import '../utility/all_enum_class.dart';
 import '../utility/app_colors.dart';
@@ -10,73 +11,71 @@ import 'custom_button.dart';
 class CustomListViewItem extends StatelessWidget {
   ItemListType itemListType;
 
-  CustomListViewItem({required this.itemListType});
+  CustomListViewItem({required this.itemListType });
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-          // color: Colors.cyan,
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-            Text("1-12-2021"),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                    flex: 3,
-                    child: Text(
-                      "2-10-2022",
-                      textAlign: TextAlign.right,
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Text(
-                      "رقم الطلب",
-                      textAlign: TextAlign.right,
-                    )),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                    flex: 3,
-                    child: Text(
-                      "2-10-2022",
-                      textAlign: TextAlign.right,
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Text(
-                      "موعد التسليم",
-                      textAlign: TextAlign.right,
-                    )),
-              ],
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Expanded(
-                    flex: 3,
-                    child: Text(
-                      "2-10-2022",
-                      textAlign: TextAlign.right,
-                    )),
-                Expanded(
-                    flex: 1,
-                    child: Text(
-                      "حالة الطلب",
-                      textAlign: TextAlign.right,
-                    )),
-              ],
-            ),
-            itemType(size: size, item: itemListType, context: context)
-          ])),
+      child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+          children: [
+        Text("1-12-2021"),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+                flex: 3,
+                child: Text(
+                  "2-10-2022",
+                  textAlign: TextAlign.right,
+                )),
+            Expanded(
+                flex: 1,
+                child: Text(
+                  "رقم الطلب",
+                  textAlign: TextAlign.right,
+                )),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+                flex: 3,
+                child: Text(
+                  "2-10-2022",
+                  textAlign: TextAlign.right,
+                )),
+            Expanded(
+                flex: 1,
+                child: Text(
+                  "موعد التسليم",
+                  textAlign: TextAlign.right,
+                )),
+          ],
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Expanded(
+                flex: 3,
+                child: Text(
+                  "2-10-2022",
+                  textAlign: TextAlign.right,
+                )),
+            Expanded(
+                flex: 1,
+                child: Text(
+                  "حالة الطلب",
+                  textAlign: TextAlign.right,
+                )),
+          ],
+        ),
+        itemType(size: size, item: itemListType, context: context)
+      ]),
     );
   }
 

@@ -19,7 +19,7 @@ void main() async{
   await Firebase.initializeApp();
 
 
-  await FirebaseMessaging.instance;
+    FirebaseMessaging.instance;
   await GetStorage.init();
 
   runApp(const MyApp());

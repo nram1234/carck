@@ -4,7 +4,12 @@ class MyCustomNavigator {
   static CustomPushName({required context, required String pagename}) {
     Navigator.pushNamed(context, pagename);
   }
-
+  static CustomPush({required context, required   pagename}) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) =>   pagename()),
+    );
+  }
   static CustomPushReplacementName({required context, required String pagename}) {
     Navigator.pushReplacementNamed(context, pagename);
   }

@@ -34,7 +34,7 @@ String? nameValidator  (value) {
 
     String  firebase_token =
   await  PushNotificationManagger().init();
-    print("this is thefirebase_tokenfirebase_token =>${firebase_token} ");
+
   if(formKey.currentState!.validate()){
     islogin=true;
     update();
@@ -49,14 +49,14 @@ String? nameValidator  (value) {
 
       LogInModel data=value as LogInModel;
 
-      if(data.status==true){
-
-        await SecureStorage.writeSecureJsonData(
-            key:AllStringConst.login ,value: data.toJson());
+   if(data.status==true){
+      await  SecureStorage.writeSecureDataINT(key: AllStringConst.id , value: data.result!.agentData![0].id!);
+        // await SecureStorage.writeSecureJsonData(
+        //     key:AllStringConst.login ,value: data.toJson());
         Get.offAllNamed("Home");
       }else{
 
-        Get.snackbar("", "");
+        Get.snackbar("", data.message!);
       }
       islogin=false;
 update();
