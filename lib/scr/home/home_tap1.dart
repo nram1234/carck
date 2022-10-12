@@ -15,7 +15,7 @@ class HomeTap1 extends StatelessWidget {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
     return GetBuilder<HomeViwController>(builder: (logic) {
-      return logic.homeModel == null
+      return logic.homeModel == null || logic.getDataInfoModel == null
           ? const Center(
               child: CircularProgressIndicator(),
             )
@@ -52,7 +52,8 @@ class HomeTap1 extends StatelessWidget {
                             Text("مرحبا",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20)),
-                            Text("محمد احمد",
+                            Text(
+                                logic.getDataInfoModel?.result?.customerInfo?.name??"",
                                 style: TextStyle(
                                     color: Colors.white, fontSize: 20))
                           ],
@@ -64,7 +65,10 @@ class HomeTap1 extends StatelessWidget {
                           height: 50,
                           width: 50,
                           decoration: BoxDecoration(
-                              shape: BoxShape.circle, color: Colors.white),
+                              shape: BoxShape.circle,
+                              color: Colors.white,
+                              image: DecorationImage(
+                                  image: NetworkImage(logic.getDataInfoModel!.result!.customerInfo!.img!))),
                         ),
                       ],
                     ),

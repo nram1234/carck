@@ -1,12 +1,22 @@
+import 'dart:io';
+import 'package:dio/dio.dart';
+
 import 'package:carck/scr/home/home_tap1.dart';
 import 'package:carck/utility/app_colors.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
+import 'package:get/get.dart' hide MultipartFile, FormData;
+import 'package:image_picker/image_picker.dart';
 
+import '../../../netWork/apis/edit_profile_api.dart';
+import '../../../netWork/apis/get_data_info_api.dart';
 import '../../../netWork/apis/get_order_details_api.dart';
 import '../../../netWork/apis/home_api.dart';
+import '../../../netWork/apis/preparation_profile_api.dart';
+import '../../../netWork/models/edit_profile_model.dart';
+import '../../../netWork/models/get_data_info_model.dart';
 import '../../../netWork/models/get_order_details_model.dart';
 import '../../../netWork/models/home_model.dart';
+import '../../../netWork/models/preparation_profile_model.dart';
 import '../../../sheardWidgets/custom_button.dart';
 import '../../../utility/all_string_const.dart';
 import '../../../utility/storage.dart';
@@ -15,14 +25,14 @@ import '../home_tap3.dart';
 import '../home_tap4.dart';
 
 class HomeViwController extends GetxController {
-
-  TextEditingController textEditingControllerProfileName=TextEditingController();
-  TextEditingController textEditingControllerProfileEmail=TextEditingController();
-  TextEditingController textEditingControllerProfilePhone=TextEditingController();
-  TextEditingController textEditingControllerProfileAddrs=TextEditingController();
-
-
-
+  TextEditingController textEditingControllerProfileName =
+      TextEditingController();
+  TextEditingController textEditingControllerProfileEmail =
+      TextEditingController();
+  TextEditingController textEditingControllerProfilePhone =
+      TextEditingController();
+  TextEditingController textEditingControllerProfileAddrs =
+      TextEditingController();
 
   int _navigatorValue = 0;
   String _currentPage = 'Page1';
@@ -57,56 +67,166 @@ class HomeViwController extends GetxController {
       tabItem: _pageKeys[0],
     ); //=HomeView();
     getHomedata();
+    getDataInfodata();
   }
 
-
   HomeModel? homeModel;
-  getHomedata()async{
-    HomeAPI homeAPI=HomeAPI();
 
-    Map <String,dynamic>a={};
-    a['id_agent']  =  SecureStorage.readSecureDataINT(AllStringConst.id);
+  getHomedata() async {
+    HomeAPI homeAPI = HomeAPI();
 
-    a['key']  = '1234567890';
+    Map<String, dynamic> a = {};
+    a['id_agent'] = SecureStorage.readSecureDataINT(AllStringConst.id);
+
+    a['key'] = '1234567890';
 
     homeAPI.post(a).then((value) {
-homeModel=value as HomeModel;
-update();
+      homeModel = value as HomeModel;
+      update();
     });
   }
 
-bool isGetOrderDetails=false;
+  PreparationProfileModel? preparationProfileModel;
+  String? imageProfile;
+
+  getpreparationProfiledata() async {
+    GetPreparationProfileAPI getPreparationProfileAPI =
+        GetPreparationProfileAPI();
+
+    Map<String, dynamic> a = {};
+    a['agent_id'] = SecureStorage.readSecureDataINT(AllStringConst.id);
+
+    a['key'] = '1234567890';
+
+    getPreparationProfileAPI.post(a).then((value) {
+      preparationProfileModel = value as PreparationProfileModel;
+
+      textEditingControllerProfileName.text =
+          preparationProfileModel?.result?.customerInfo?.name ?? "";
+      textEditingControllerProfileEmail.text =
+          preparationProfileModel?.result?.customerInfo?.email ?? "";
+      textEditingControllerProfilePhone.text =
+          preparationProfileModel?.result?.customerInfo?.phone ?? "";
+      textEditingControllerProfileAddrs.text =
+          preparationProfileModel?.result?.customerInfo?.address ?? "";
+      imageProfile = preparationProfileModel?.result?.customerInfo?.img;
+      update();
+    });
+  }
+
+  GetDataInfoModel? getDataInfoModel;
+
+  getDataInfodata() async {
+    GetDataInfoAPI getDataInfoAPI = GetDataInfoAPI();
+
+    Map<String, dynamic> a = {};
+    a['agent_id'] = SecureStorage.readSecureDataINT(AllStringConst.id);
+
+    a['key'] = '1234567890';
+
+    getDataInfoAPI.post(a).then((value) {
+      print("vvvvvvvvvvvvvvvv${value}");
+      getDataInfoModel = value as GetDataInfoModel;
+      update();
+    });
+  }
+
+  bool isGetOrderDetails = false;
   GetOrderDetailsModel? getOrderDetailsModel;
-  getGetOrderDetails({required id_order,required Size size,required BuildContext context ,updateId})async{
-    isGetOrderDetails=true;
+
+  getGetOrderDetails(
+      {required id_order,
+      required Size size,
+      required BuildContext context,
+      updateId}) async {
+    isGetOrderDetails = true;
     update([updateId]);
-    GetOrderDetailsAPI homeAPI=GetOrderDetailsAPI();
+    GetOrderDetailsAPI homeAPI = GetOrderDetailsAPI();
 
-    Map <String,dynamic>a={};
-    a['id_agent']  =  SecureStorage.readSecureDataINT(AllStringConst.id);
+    Map<String, dynamic> a = {};
+    a['id_agent'] = SecureStorage.readSecureDataINT(AllStringConst.id);
 
-    a['key']  = '1234567890';
-    a['id_order']  = id_order;
+    a['key'] = '1234567890';
+    a['id_order'] = id_order;
     homeAPI.post(a).then((value) {
-      getOrderDetailsModel=value as GetOrderDetailsModel;
-      customBottomSheet(size: size,context: context);
-      isGetOrderDetails=false;
+      getOrderDetailsModel = value as GetOrderDetailsModel;
+      customBottomSheet(size: size, context: context);
+      isGetOrderDetails = false;
       update([updateId]);
       //update();
     });
   }
 
+  File? image;
 
+  Future pickImage() async {
+    final picker = ImagePicker();
+    XFile? img = await picker.pickImage(
+        source: ImageSource.gallery,
+        maxHeight: 512,
+        maxWidth: 512,
+        imageQuality: 100);
+    if (img != null) {
+      image = File(img.path);
+      update();
+    }
+    //_cropImage(File(img!.path));
+  }
 
+  EditProfileModel? editProfileModel;
+  bool saveEd = false;
 
+  EditProfileDetails() async {
+    saveEd = true;
+    update();
 
+    EditProfileAPI editProfileAPI = EditProfileAPI();
 
+    Map<String, dynamic> a = {};
+    a['agent_id'] = SecureStorage.readSecureDataINT(AllStringConst.id);
 
+    a['key'] = '1234567890';
 
+    a['phone'] = textEditingControllerProfilePhone.text;
+    a['name'] = textEditingControllerProfileName.text;
+    a['address'] = textEditingControllerProfileAddrs.text;
+    a['email'] = textEditingControllerProfileEmail.text;
+    if (image != null) {
+      String fileName = image!.path.split('/').last;
+      FormData formData = FormData.fromMap({
+        "file": await MultipartFile.fromFile(image!.path, filename: fileName),
+      });
+      // a['file'] =    await  MultipartFile.fromFile(image!.path,
+      //     filename: fileName, //contentType:  MediaType('image', 'png')
+      // );
 
+      a['file'] = formData;
+    }
 
+    FormData formData = new FormData.fromMap({
+      // "mode": "formdata",
+      "agent_id": SecureStorage.readSecureDataINT(AllStringConst.id),
+      "key": '1234567890',
 
+      'phone':textEditingControllerProfilePhone.text,
+      'name': textEditingControllerProfileName.text,
+      'address':textEditingControllerProfileAddrs.text,
+      'email':textEditingControllerProfileEmail.text,
 
+      "file": await MultipartFile.fromFile(image!.path,
+          filename: image!.path.split('/').last,// contentType: new MediaType('image', 'png')
+
+      ),
+    });
+
+    editProfileAPI.postFile(formData).then((value) {
+      editProfileModel = value as EditProfileModel;
+
+      saveEd = false;
+      update();
+      //update();
+    });
+  }
 
   changeSelectedValue(int selectedValue) {
     _navigatorValue = selectedValue;
@@ -117,7 +237,11 @@ bool isGetOrderDetails=false;
       naigatorKey: _navigatorKey,
       tabItem: _currentPage,
     );
+    if (selectedValue == 3) {
+      print("ljhnfcaoihnfiuaefcneasifnvuiasnviaercv");
 
+      getpreparationProfiledata();
+    }
     update();
   }
 
@@ -210,7 +334,6 @@ bool isGetOrderDetails=false;
                                 style: TextStyle(
                                     fontSize: 24, color: ColorApp.blueColor),
                               ),
-
                               SizedBox(
                                 height: 8,
                               ),
@@ -316,25 +439,30 @@ bool isGetOrderDetails=false;
                   //       );
                   //     })
                   // ,
-SizedBox(height: 20,),
+                  SizedBox(
+                    height: 20,
+                  ),
                   ...List<Widget>.generate(
                       getOrderDetailsModel!.result!.allProducts!.length,
                       (i) => Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Card(elevation: 8,
-                          child: SizedBox(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Card(
+                              elevation: 8,
+                              child: SizedBox(
                                 width: size.width * .9,
-                                child:Padding(
+                                child: Padding(
                                   padding: const EdgeInsets.all(0.0),
                                   child: Column(
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
-                                        child: Directionality(textDirection: TextDirection.rtl,
+                                        child: Directionality(
+                                          textDirection: TextDirection.rtl,
                                           child: Row(
                                             children: [
                                               Image.network(
-                                                getOrderDetailsModel!.result!.allProducts![i].image!,
+                                                getOrderDetailsModel!.result!
+                                                    .allProducts![i].image!,
                                                 width: 75,
                                                 height: 75,
                                               ),
@@ -343,13 +471,19 @@ SizedBox(height: 20,),
                                               ),
                                               Expanded(
                                                   flex: 3,
-                                                  child: Text(    getOrderDetailsModel!.result!.allProducts![i].productName!)),
+                                                  child: Text(
+                                                      getOrderDetailsModel!
+                                                          .result!
+                                                          .allProducts![i]
+                                                          .productName!)),
                                               SizedBox(
                                                 width: 4,
                                               ),
                                               Expanded(
                                                   flex: 1,
-                                                  child: Center(child: Text("${    getOrderDetailsModel!.result!.allProducts![i].price}  \$")))
+                                                  child: Center(
+                                                      child: Text(
+                                                          "${getOrderDetailsModel!.result!.allProducts![i].price}  \$")))
                                             ],
                                           ),
                                         ),
@@ -357,81 +491,87 @@ SizedBox(height: 20,),
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Expanded(
                                                 flex: 3,
                                                 child: Text(
                                                   "${getOrderDetailsModel!.result!.allProducts![i].providerName}",
-                                                  style: TextStyle(fontSize: 15),
+                                                  style:
+                                                      TextStyle(fontSize: 15),
                                                   textAlign: TextAlign.right,
                                                 )),
                                             Expanded(
                                                 flex: 1,
                                                 child: Text(
                                                   ": اسم البايع",
-                                                  style: TextStyle(fontSize: 15),
+                                                  style:
+                                                      TextStyle(fontSize: 15),
                                                   textAlign: TextAlign.right,
                                                 )),
                                           ],
                                         ),
                                       ),
-
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Expanded(
                                                 flex: 3,
                                                 child: Text(
                                                   "${getOrderDetailsModel!.result!.allProducts![i].providerAddress}",
-                                                  style: TextStyle(fontSize: 15),
+                                                  style:
+                                                      TextStyle(fontSize: 15),
                                                   textAlign: TextAlign.right,
                                                 )),
                                             Expanded(
                                                 flex: 1,
                                                 child: Text(
                                                   ": عنوان البايع",
-                                                  style: TextStyle(fontSize: 15),
+                                                  style:
+                                                      TextStyle(fontSize: 15),
                                                   textAlign: TextAlign.right,
                                                 )),
                                           ],
                                         ),
                                       ),
-
                                       Padding(
                                         padding: const EdgeInsets.all(4.0),
                                         child: Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Expanded(
                                                 flex: 3,
                                                 child: Text(
                                                   "${getOrderDetailsModel!.result!.allProducts![i].providerPhone}",
-                                                  style: TextStyle(fontSize: 15),
+                                                  style:
+                                                      TextStyle(fontSize: 15),
                                                   textAlign: TextAlign.right,
                                                 )),
                                             Expanded(
                                                 flex: 1,
                                                 child: Text(
                                                   ": تلفون البايع",
-                                                  style: TextStyle(fontSize: 15),
+                                                  style:
+                                                      TextStyle(fontSize: 15),
                                                   textAlign: TextAlign.right,
                                                 )),
                                           ],
                                         ),
                                       ),
-
-
-
                                     ],
                                   ),
                                 ),
                               ),
-                        ),
-                      )),
-SizedBox(height: 10,),
+                            ),
+                          )),
+                  SizedBox(
+                    height: 10,
+                  ),
                   SizedBox(
                     width: size.width * .9,
                     child: Column(
@@ -457,7 +597,10 @@ SizedBox(height: 10,),
                               Spacer(),
                               Text(
                                 "${getOrderDetailsModel!.result!.orderDetails![0].shippingCharges}  ${getOrderDetailsModel!.result!.orderDetails![0].currencyName} ",
-                                style: TextStyle(color: ColorApp.primaryColor,fontSize: 16,fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: ColorApp.primaryColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
@@ -483,7 +626,10 @@ SizedBox(height: 10,),
                               Spacer(),
                               Text(
                                 "${getOrderDetailsModel!.result!.orderDetails![0].totalPrice}  \$",
-                                  style: TextStyle(color: ColorApp.primaryColor,fontSize: 16,fontWeight: FontWeight.bold),
+                                style: TextStyle(
+                                    color: ColorApp.primaryColor,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold),
                               )
                             ],
                           ),
@@ -537,7 +683,8 @@ SizedBox(height: 10,),
                             "قيد الانتظار",
                             style: TextStyle(
                                 color: ColorApp.primaryColor,
-                                fontWeight: FontWeight.bold,fontSize: 15),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 15),
                           )
                         ],
                       ),
@@ -546,29 +693,32 @@ SizedBox(height: 10,),
                   SizedBox(
                     height: 20,
                   ),
-          Directionality(
-          textDirection: TextDirection.rtl,
-          child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: [
-
-          CustomButton(
-          width: size.width * .25,
-          title: "قبول الطلب",
-          onClick: () {},
-          fontWeight: FontWeight.bold,
-          buttonColor: ColorApp.greenColor,
-          ),
-          CustomButton(
-          width: size.width * .25,
-          title: "رفض الطلب",
-          onClick: () {},
-          fontWeight: FontWeight.bold,
-          buttonColor: ColorApp.redColor,
-          ),
-          ],
-          ),
-          ),SizedBox(height: 50,)  ]),
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        CustomButton(
+                          width: size.width * .25,
+                          title: "قبول الطلب",
+                          onClick: () {},
+                          fontWeight: FontWeight.bold,
+                          buttonColor: ColorApp.greenColor,
+                        ),
+                        CustomButton(
+                          width: size.width * .25,
+                          title: "رفض الطلب",
+                          onClick: () {},
+                          fontWeight: FontWeight.bold,
+                          buttonColor: ColorApp.redColor,
+                        ),
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 50,
+                  )
+                ]),
               ),
             ),
           );
@@ -628,11 +778,6 @@ class PageToView extends StatelessWidget {
       },
     );
   }
-
-
-
-
-
 }
 //
 // Widget build(BuildContext context) {

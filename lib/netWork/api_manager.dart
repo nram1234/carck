@@ -48,6 +48,7 @@ abstract class ApiManager {
     var data;
 
     Options options = Options(headers: {
+
       "Accept": "application/json",
       'Content-Type': 'application/json',
     },);
@@ -65,6 +66,33 @@ abstract class ApiManager {
     )
         .then((value) {
 print(value.data);
+      data = value.data;
+      jsonList = fromJson(data);
+    });
+    return jsonList;}
+
+  Future<AbstractJsonResource?> postFile(formData) async {
+    AbstractJsonResource? jsonList;
+    var data;
+
+    Options options = Options(headers: {
+      'Content-Type': 'multipart/form-data',
+
+    },);
+
+    await dioSingleton.dio
+        .post(
+        apiUrl(),
+        data:  formData,
+        options: options
+      // Options(
+      //     followRedirects: false,
+      //     validateStatus: (status) {
+      //       return status < 500;
+      //     }),
+    )
+        .then((value) {
+      print(value.data);
       data = value.data;
       jsonList = fromJson(data);
     });
