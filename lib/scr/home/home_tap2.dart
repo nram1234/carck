@@ -136,7 +136,7 @@ class HomeTap2 extends GetView<HomeViwController> {
                                       .detailsOrder![pos],
                                   itemListType: ItemListType.finished,
                                 );
-                                ;
+
                               })),
                 ],
               ))

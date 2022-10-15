@@ -387,7 +387,7 @@ class HomeViwController extends GetxController {
   }
 
 
-  customBottomSheet({required Size size, required context,}) {
+  customBottomSheet({required Size size, required context,int? fromTapNumber}) {
     return showModalBottomSheet(
         isScrollControlled: true,
         enableDrag: true,
@@ -822,7 +822,7 @@ class HomeViwController extends GetxController {
                   SizedBox(
                     height: 20,
                   ),
-                  Directionality(
+                  fromTapNumber==2?    Directionality(
                     textDirection: TextDirection.rtl,
                     child:
                     GetBuilder<HomeViwController>(id:getOrderDetailsModel!.result!
@@ -871,7 +871,7 @@ class HomeViwController extends GetxController {
                     //     ),
                     //   ],
                     // ),
-                  ),
+                  ):SizedBox(),
                   SizedBox(
                     height: 50,
                   )
