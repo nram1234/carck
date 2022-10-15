@@ -114,7 +114,12 @@ class CustomListViewItemTap1 extends StatelessWidget {
               CustomButton(
                 width: size.width * .25,
                 title: "قبول الطلب",
-                onClick: () {},
+                onClick: () {
+
+
+
+
+                },
                 fontWeight: FontWeight.bold,
                 buttonColor: ColorApp.greenColor,
               ),

@@ -104,20 +104,20 @@ class HomeTap1 extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Padding(
-                padding: const EdgeInsets.only(right: 20, left: 20),
-                child: Align(
-                    alignment: Alignment.topRight,
-                    child: Text(
-                      "طلبات جديدة",
-                      style: TextStyle(
-                        fontSize: 18,
-                      ),
-                    )),
-              ),
-              SizedBox(
-                height: 10,
-              ),
+              // Padding(
+              //   padding: const EdgeInsets.only(right: 20, left: 20),
+              //   child: Align(
+              //       alignment: Alignment.topRight,
+              //       child: Text(
+              //         "طلبات جديدة",
+              //         style: TextStyle(
+              //           fontSize: 18,
+              //         ),
+              //       )),
+              // ),
+              // SizedBox(
+              //   height: 10,
+              // ),
               Expanded(
                   child: Padding(
                 padding: const EdgeInsets.only(right: 20, left: 20),

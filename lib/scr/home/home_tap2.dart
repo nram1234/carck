@@ -10,9 +10,7 @@ import 'controller/home_controller.dart';
 class HomeTap2 extends GetView<HomeViwController> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery
-        .of(context)
-        .size;
+    Size size = MediaQuery.of(context).size;
 
     return SafeArea(
       child: GetBuilder<HomeViwController>(builder: (logic) {
@@ -26,7 +24,7 @@ class HomeTap2 extends GetView<HomeViwController> {
                   decoration: BoxDecoration(
                       color: ColorApp.grey.withOpacity(.1),
                       borderRadius:
-                      BorderRadius.only(bottomLeft: Radius.circular(25))),
+                          BorderRadius.only(bottomLeft: Radius.circular(25))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -34,10 +32,11 @@ class HomeTap2 extends GetView<HomeViwController> {
                       SizedBox(
                         width: 8,
                       ),
-                      GestureDetector(onTap: (){
-
-                        controller.changeSelectedValue(0);
-                      },child: Icon(Icons.arrow_forward)),
+                      GestureDetector(
+                          onTap: () {
+                            controller.changeSelectedValue(0);
+                          },
+                          child: Icon(Icons.arrow_forward)),
                       SizedBox(
                         width: 20,
                       )
@@ -46,8 +45,7 @@ class HomeTap2 extends GetView<HomeViwController> {
               SizedBox(
                 height: 10,
               ),
-              Row(
-                  children:
+              Row(children:
                   // List<Widget>.generate(logic.list.length, (int i) {
                   //   return TabBarItem(
                   //     text: logic.list[i],
@@ -58,61 +56,90 @@ class HomeTap2 extends GetView<HomeViwController> {
                   //     },
                   //   );
                   // }
-                  [TabBarItem(
-                    text: logic.list[0],
-                    isActive: logic.index == 0,
-                    function: () {
-
-                      logic.updatePageController(0);
-                    },
-                  ),TabBarItem(
-                    text: logic.list[1],
-                    isActive: logic.index == 1,
-                    function: () {
-
-                      logic.updatePageController(1);
-                    },
-                  ),TabBarItem(
-                    text: logic.list[2],
-                    isActive: logic.index == 2,
-                    function: () {
-
-                      logic.updatePageController(2);
-                    },
-                  )]
-                  ),
+                  [
+                TabBarItem(
+                  text: logic.list[0],
+                  isActive: logic.index == 0,
+                  function: () {
+                    logic.updatePageController(0);
+                  },
+                ),
+                TabBarItem(
+                  text: logic.list[1],
+                  isActive: logic.index == 1,
+                  function: () {
+                    logic.updatePageController(1);
+                  },
+                ),
+                TabBarItem(
+                  text: logic.list[2],
+                  isActive: logic.index == 2,
+                  function: () {
+                    logic.updatePageController(2);
+                  },
+                )
+              ]),
               Expanded(
                   child: PageView(
+                controller: logic.controller,
+                pageSnapping: true,
+                allowImplicitScrolling: true,
+                onPageChanged: (v) {
+                  print(v);
+                  logic.updatePageController(v);
+                },
+                children: <Widget>[
+                  Directionality(
+                    textDirection: TextDirection.rtl,
+                    child: Container(
+                        // child:logic.getWaitingOrdersModel==null?Center(child: CircularProgressIndicator(),): ListView.builder(
+                        //     itemCount: logic.getWaitingOrdersModel?.result
+                        //         ?.detailsOrder?.length,
+                        //     itemBuilder: (context, pos) {
+                        //       return CustomListViewItem(
+                        //         itemListType: ItemListType.waiting,
+                        //         detailsOrders: logic.getWaitingOrdersModel!.result!.detailsOrder![pos],
+                        //       );
+                        //     })
+                    ),
+                  ),
+                  logic.currentOrders == null
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          :
+              ListView.builder(
+                              itemCount:
+                              logic
+                                  .receivedOrders?.result?.detailsOrder?.length,
+                              itemBuilder: (context, pos) {
 
-                    controller: logic.controller,pageSnapping: false,allowImplicitScrolling: true,
-                    onPageChanged:(v){
-                      print(v);
-                      logic.updatePageController(v);
-                    },
-                    children: <Widget>[
-                      Directionality(textDirection: TextDirection.rtl,
-                        child: Container(
-                            child: ListView.builder(
-                                itemCount: 1,
-                                itemBuilder: (context, pos) {
-                                  return CustomListViewItem(itemListType: ItemListType.waiting,);
-                                })),
-                      ),
-                      Container(
-                          child: ListView.builder(
-                              itemCount: 2,
+
+                                return CustomListViewItem(
+                                  detailsOrders: logic.receivedOrders!.result!
+                                      .detailsOrder![pos],
+                                  itemListType: ItemListType.employment,
+                                );
+                              })
+              ,
+                  Container(
+                      child: logic.receivedOrders == null
+                          ? Center(
+                              child: CircularProgressIndicator(),
+                            )
+                          : ListView.builder(
+                              itemCount: logic
+                                  .receivedOrders?.result?.detailsOrder?.length,
                               itemBuilder: (context, pos) {
-                                return CustomListViewItem(itemListType: ItemListType.employment,);
-                              })),
-                      Container(
-                          child: ListView.builder(
-                              itemCount: 3,
-                              itemBuilder: (context, pos) {
-                                return CustomListViewItem(itemListType:  ItemListType.finished,);
+                                return CustomListViewItem(
+                                  detailsOrders: logic.receivedOrders!.result!
+                                      .detailsOrder![pos],
+                                  itemListType: ItemListType.finished,
+                                );
                                 ;
                               })),
-                    ],
-                  ))
+                ],
+              ))
             ]),
           ),
         );

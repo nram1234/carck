@@ -11,5 +11,12 @@ class APIApp {
   static const String getDataInfoUrl =baseUrl+"delivery/get_data_info";
   static const String getPreparationProfileUrl =baseUrl+"delivery/preparation_profile";
   static const String geteditProfileUrl =baseUrl+"delivery/edit_profile";
+  static const String getWaitingOrdersUrl =baseUrl+"delivery/get_waiting_orders";
+  static const String getCurrentOrdersUrl =baseUrl+"delivery/get_current_orders";
+  static const String getReceivedOrdersUrl =baseUrl+"delivery/get_received_orders";
+  static const String changeStatuOrderUrl =baseUrl+"delivery/change_status_order";
+  static const String getDeliveredOrdersUrl =baseUrl+"delivery/get_delivered_orders";
+
+
 
 }
