@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../../utility/all_enum_class.dart';
 import '../../utility/app_colors.dart';
 import 'controller/home_controller.dart';
 
@@ -144,7 +145,7 @@ class HomeTap3 extends GetView<HomeViwController> {
                                         textScaleFactor: 0.5,
                                       ),
                                       GestureDetector(onTap: (){
-                                        controller.customBottomSheet(size: size, context: context);
+                                        controller.customBottomSheet(itemListType: ItemListType.finished,size: size, context: context);
                                       },
                                         child: Text("تفاصيل الطلب",
                                             style: TextStyle(fontSize: 12,color: ColorApp.primaryColor)),

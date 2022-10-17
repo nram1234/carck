@@ -104,7 +104,7 @@ class CustomListViewItemTap1 extends StatelessWidget {
                       title: "تفاصيل الطلب",
                       titleColor: ColorApp.redColor,
                       onClick: () {
-                        logic.getGetOrderDetails(updateId:id_order.toString()  ,
+                        logic.getGetOrderDetails(itemListType:item ,updateId:id_order.toString()  ,
                             id_order: id_order, size: size, context: context);
                       },
                       fontWeight: FontWeight.bold,
@@ -145,7 +145,7 @@ class CustomListViewItemTap1 extends StatelessWidget {
                     title: "تفاصيل الطلب",
                     titleColor: ColorApp.redColor,
                     onClick: () {
-                      logic.getGetOrderDetails(
+                      logic.getGetOrderDetails(itemListType: item,
                           id_order: id_order, size: size, context: context,updateId:id_order.toString());
                     },
                     fontWeight: FontWeight.bold,
@@ -172,7 +172,7 @@ class CustomListViewItemTap1 extends StatelessWidget {
                     title: "تفاصيل الطلب",
                     titleColor: ColorApp.redColor,
                     onClick: () {
-                     logic.getGetOrderDetails(
+                     logic.getGetOrderDetails(itemListType: item,
                           id_order: id_order, size: size, context: context,updateId: id_order.toString());
                     },
                     fontWeight: FontWeight.bold,

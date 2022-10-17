@@ -103,7 +103,7 @@ class CustomListViewItem extends StatelessWidget {
                   width: size.width * .25,
                   title: "تفاصيل الطلب",
                   onClick: () {
-                    logic.getGetOrderDetails(
+                    logic.getGetOrderDetails(itemListType: item,
                         updateId: detailsOrders!.idOrder.toString(),
                         id_order: detailsOrders!.idOrder,
                         size: size,
@@ -172,7 +172,7 @@ class CustomListViewItem extends StatelessWidget {
                 title: "تفاصيل الطلب",
                 titleColor: ColorApp.redColor,
                 onClick: () {
-                  logic.getGetOrderDetails(
+                  logic.getGetOrderDetails(itemListType: item,
                       updateId: detailsOrders!.idOrder.toString(),
                       id_order: detailsOrders!.idOrder,
                       size: size,
@@ -213,7 +213,7 @@ class CustomListViewItem extends StatelessWidget {
                 title: "تفاصيل الطلب",
                 titleColor: ColorApp.redColor,
                 onClick: () {
-                  logic.getGetOrderDetails(
+                  logic.getGetOrderDetails(itemListType: item,
                       updateId: detailsOrders!.idOrder.toString(),
                       id_order: detailsOrders!.idOrder,
                       size: size,

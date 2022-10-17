@@ -23,6 +23,7 @@ import '../../../netWork/models/get_waiting_orders.dart';
 import '../../../netWork/models/home_model.dart';
 import '../../../netWork/models/preparation_profile_model.dart';
 import '../../../sheardWidgets/custom_button.dart';
+import '../../../utility/all_enum_class.dart';
 import '../../../utility/all_string_const.dart';
 import '../../../utility/storage.dart';
 import '../home_tap2.dart';
@@ -139,7 +140,7 @@ class HomeViwController extends GetxController {
   bool isGetOrderDetails = false;
   GetOrderDetailsModel? getOrderDetailsModel;
 
-  getGetOrderDetails({required id_order,
+  getGetOrderDetails({required ItemListType itemListType,required id_order,
     required Size size,
     required BuildContext context,
     updateId}) async {
@@ -161,7 +162,7 @@ class HomeViwController extends GetxController {
     a['id_order'] = id_order;
     homeAPI.post(a).then((value) {
       getOrderDetailsModel = value as GetOrderDetailsModel;
-      customBottomSheet(size: size, context: context);
+      customBottomSheet(itemListType: itemListType,size: size, context: context);
       isGetOrderDetails = false;
       update([updateId]);
       //update();
@@ -244,6 +245,62 @@ class HomeViwController extends GetxController {
       //update();
     });
   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  // GetDataInfoModel? getDataInfoModel;
+  //
+  // getDataInfodata() async {
+  //   GetDataInfoAPI getDataInfoAPI = GetDataInfoAPI();
+  //
+  //   Map<String, dynamic> a = {};
+  //   a['agent_id'] = SecureStorage.readSecureDataINT(AllStringConst.id);
+  //
+  //   a['key'] = '1234567890';
+  //
+  //   getDataInfoAPI.post(a).then((value) {
+  //     print("vvvvvvvvvvvvvvvv${value}");
+  //     getDataInfoModel = value as GetDataInfoModel;
+  //     update();
+  //   });
+  // }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   changeSelectedValue(int selectedValue) {
     _navigatorValue = selectedValue;
@@ -387,7 +444,7 @@ class HomeViwController extends GetxController {
   }
 
 
-  customBottomSheet({required Size size, required context,int? fromTapNumber}) {
+  customBottomSheet({required Size size, required context, required ItemListType itemListType}) {
     return showModalBottomSheet(
         isScrollControlled: true,
         enableDrag: true,
@@ -793,13 +850,7 @@ class HomeViwController extends GetxController {
                   SizedBox(
                     height: 8,
                   ),
-                  Text(
-                    "الاجمالي",
-                    style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
-                  ),
-                  SizedBox(
-                    height: 20,
-                  ),
+
                   // SizedBox(
                   //   width: size.width * .8,
                   //   child: Directionality(
@@ -822,56 +873,63 @@ class HomeViwController extends GetxController {
                   SizedBox(
                     height: 20,
                   ),
-                  fromTapNumber==2?    Directionality(
-                    textDirection: TextDirection.rtl,
-                    child:
-                    GetBuilder<HomeViwController>(id:getOrderDetailsModel!.result!
-                        .orderDetails![0].idOrder ,
-                        builder: (logic) {
-                          return logic.isChangeStatusOrder?Center(child: CircularProgressIndicator(),): CustomButton(
-                            width: size.width * .25,
-                            title: "تم التوصيل",
-                            onClick: () {
-                              getChangeStatusOrder(
-                                  updateId: getOrderDetailsModel!.result!
-                                      .orderDetails![0].idOrder,
-                                  id_order: getOrderDetailsModel!.result!
-                                      .orderDetails![0].idOrder, action: 3);
-                            },
-                            fontWeight: FontWeight.bold,
-                            buttonColor: ColorApp.greenColor,
-                          );
-                        }),
-                    // Row(
-                    //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    //   children: [
-                    //     GetBuilder<HomeViwController>(id:getOrderDetailsModel!.result!
-                    //         .orderDetails![0].idOrder ,
-                    //         builder: (logic) {
-                    //           return logic.isChangeStatusOrder?Center(child: CircularProgressIndicator(),): CustomButton(
-                    //             width: size.width * .25,
-                    //             title: "قبول الطلب",
-                    //             onClick: () {
-                    //               getChangeStatusOrder(
-                    //                   updateId: getOrderDetailsModel!.result!
-                    //                       .orderDetails![0].idOrder,
-                    //                   id_order: getOrderDetailsModel!.result!
-                    //                       .orderDetails![0].idOrder, action: 1);
-                    //             },
-                    //             fontWeight: FontWeight.bold,
-                    //             buttonColor: ColorApp.greenColor,
-                    //           );
-                    //         }),
-                    //     CustomButton(
-                    //       width: size.width * .25,
-                    //       title: "رفض الطلب",
-                    //       onClick: () {},
-                    //       fontWeight: FontWeight.bold,
-                    //       buttonColor: ColorApp.redColor,
-                    //     ),
-                    //   ],
-                    // ),
-                  ):SizedBox(),
+
+
+
+
+                  itemType(item: itemListType,size: size,context: context,id_order: getOrderDetailsModel!.result!.orderDetails![0].idOrder),
+                  
+                  
+                  // fromTapNumber==2?    Directionality(
+                  //   textDirection: TextDirection.rtl,
+                  //   child:
+                  //   GetBuilder<HomeViwController>(id:getOrderDetailsModel!.result!
+                  //       .orderDetails![0].idOrder ,
+                  //       builder: (logic) {
+                  //         return logic.isChangeStatusOrder?Center(child: CircularProgressIndicator(),): CustomButton(
+                  //           width: size.width * .25,
+                  //           title: "تم التوصيل",
+                  //           onClick: () {
+                  //             getChangeStatusOrder(
+                  //                 updateId: getOrderDetailsModel!.result!
+                  //                     .orderDetails![0].idOrder,
+                  //                 id_order: getOrderDetailsModel!.result!
+                  //                     .orderDetails![0].idOrder, action: 3);
+                  //           },
+                  //           fontWeight: FontWeight.bold,
+                  //           buttonColor: ColorApp.greenColor,
+                  //         );
+                  //       }),
+                  //   // Row(
+                  //   //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  //   //   children: [
+                  //   //     GetBuilder<HomeViwController>(id:getOrderDetailsModel!.result!
+                  //   //         .orderDetails![0].idOrder ,
+                  //   //         builder: (logic) {
+                  //   //           return logic.isChangeStatusOrder?Center(child: CircularProgressIndicator(),): CustomButton(
+                  //   //             width: size.width * .25,
+                  //   //             title: "قبول الطلب",
+                  //   //             onClick: () {
+                  //   //               getChangeStatusOrder(
+                  //   //                   updateId: getOrderDetailsModel!.result!
+                  //   //                       .orderDetails![0].idOrder,
+                  //   //                   id_order: getOrderDetailsModel!.result!
+                  //   //                       .orderDetails![0].idOrder, action: 1);
+                  //   //             },
+                  //   //             fontWeight: FontWeight.bold,
+                  //   //             buttonColor: ColorApp.greenColor,
+                  //   //           );
+                  //   //         }),
+                  //   //     CustomButton(
+                  //   //       width: size.width * .25,
+                  //   //       title: "رفض الطلب",
+                  //   //       onClick: () {},
+                  //   //       fontWeight: FontWeight.bold,
+                  //   //       buttonColor: ColorApp.redColor,
+                  //   //     ),
+                  //   //   ],
+                  //   // ),
+                  // ):SizedBox(),
                   SizedBox(
                     height: 50,
                   )
@@ -882,6 +940,111 @@ class HomeViwController extends GetxController {
         });
   }
 
+
+  Widget itemType({required ItemListType item,
+    required Size size,
+    required BuildContext context, required id_order}) {
+    switch (item) {
+      case ItemListType.waiting:
+        return Directionality(
+          textDirection: TextDirection.rtl,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              // GetBuilder<HomeViwController>(id:id_order.toString() ,
+              //     builder: (logic) {
+              //       return logic.isGetOrderDetails?Center(child: CircularProgressIndicator(),): CustomButton(
+              //         width: size.width * .25,
+              //         title: "تفاصيل الطلب",
+              //         titleColor: ColorApp.redColor,
+              //         onClick: () {
+              //           logic.getGetOrderDetails(itemListType: item,updateId:id_order.toString()  ,
+              //               id_order: id_order, size: size, context: context);
+              //         },
+              //         fontWeight: FontWeight.bold,
+              //         buttonColor: Colors.transparent,
+              //       );
+              //     }),
+              CustomButton(
+                width: size.width * .25,
+                title: "قبول الطلب",
+                onClick: () {
+
+
+
+
+                },
+                fontWeight: FontWeight.bold,
+                buttonColor: ColorApp.greenColor,
+              ),
+              CustomButton(
+                width: size.width * .25,
+                title: "رفض الطلب",
+                onClick: () {},
+                fontWeight: FontWeight.bold,
+                buttonColor: ColorApp.redColor,
+              ),
+            ],
+          ),
+        );
+
+      case ItemListType.employment:
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GetBuilder<HomeViwController>(id: id_order.toString(),
+                builder: (logic) {
+                  return logic.isGetOrderDetails?Center(child: CircularProgressIndicator(),): CustomButton(
+                    width: size.width * .25,
+                    title: "تفاصيل الطلب",
+                    titleColor: ColorApp.redColor,
+                    onClick: () {
+                      logic.getGetOrderDetails(itemListType: item,
+                          id_order: id_order, size: size, context: context,updateId:id_order.toString());
+                    },
+                    fontWeight: FontWeight.bold,
+                    buttonColor: Colors.transparent,
+                  );
+                }),
+            CustomButton(
+              width: size.width * .25,
+              title: "تسلبم الطلب",
+              onClick: () {},
+              fontWeight: FontWeight.bold,
+              buttonColor: ColorApp.greenColor,
+            ),
+          ],
+        );
+      case ItemListType.finished:
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GetBuilder<HomeViwController>(id:id_order.toString() ,
+                builder: (logic) {
+                  return logic.isGetOrderDetails?Center(child: CircularProgressIndicator(),): CustomButton(
+                    width: size.width * .25,
+                    title: "تفاصيل الطلب",
+                    titleColor: ColorApp.redColor,
+                    onClick: () {
+                      logic.getGetOrderDetails(itemListType: item,
+                          id_order: id_order, size: size, context: context,updateId: id_order.toString());
+                    },
+                    fontWeight: FontWeight.bold,
+                    buttonColor: Colors.transparent,
+                  );
+                }),
+          ],
+        );
+    }
+  }
+
+
+
+
+
+
+
+
   customBottomSheet2({
     required Size size,
   }) {
@@ -891,6 +1054,10 @@ class HomeViwController extends GetxController {
       color: Colors.redAccent,
     ));
   }
+
+
+
+
 }
 
 class PageToView extends StatelessWidget {
