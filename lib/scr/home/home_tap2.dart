@@ -97,7 +97,7 @@ class HomeTap2 extends GetView<HomeViwController> {
                                 ?.detailsOrder?.length,
                             itemBuilder: (context, pos) {
                               return CustomListViewItem(
-                                itemListType: ItemListType.finished,
+                                itemListType: ItemListType.employment,
                                 detailsOrders: logic.currentOrders!.result!.detailsOrder![pos],
                               );
                             })
@@ -119,7 +119,7 @@ print("receivedOrdersreceivedOrdersreceivedOrders ${ logic
                                 return CustomListViewItem(
                                   detailsOrders: logic.receivedOrders!.result!
                                       .detailsOrder![pos],
-                                  itemListType: ItemListType.employment,
+                                  itemListType: ItemListType.finished,
                                 );
                               })
               ,
@@ -135,7 +135,7 @@ print("receivedOrdersreceivedOrdersreceivedOrders ${ logic
                                 return CustomListViewItem(
                                   detailsOrders: logic.receivedOrders!.result!
                                       .detailsOrder![pos],
-                                  itemListType: ItemListType.finished,
+                                  itemListType: ItemListType.allfinished,
                                 );
 
                               })),

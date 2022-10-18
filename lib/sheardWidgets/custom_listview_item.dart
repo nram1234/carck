@@ -223,24 +223,32 @@ class CustomListViewItem extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // GetBuilder<HomeViwController>(
-            //     id: detailsOrders!.idOrder.toString(), builder: (logic) {
-            //   return logic.isGetOrderDetails ? Center(
-            //     child: CircularProgressIndicator(),) : CustomButton(
-            //     width: size.width * .25,
-            //     title: "تفاصيل الطلب",
-            //     titleColor: ColorApp.redColor,
-            //     onClick: () {
-            //       logic.getGetOrderDetails(itemListType: item,
-            //           updateId: detailsOrders!.idOrder.toString(),
-            //           id_order: detailsOrders!.idOrder,
-            //           size: size,
-            //           context: context);
-            //     },
-            //     fontWeight: FontWeight.bold,
-            //     buttonColor: Colors.transparent,
-            //   );
-            // }),
+            GetBuilder<HomeViwController>(id:  detailsOrders!.idOrder.toString(),
+                builder: (logic) {
+                  return logic.isGetOrderDetails ? Center(
+                    child: CircularProgressIndicator(),) : CustomButton(
+                    width: size.width * .25,
+                    title: "تم التوصيل",
+                    fontWeight: FontWeight.bold,
+                    buttonColor: ColorApp.greenColor,
+                    onClick: () {
+                      logic.getChangeStatusOrder(
+                          updateId:  detailsOrders!.idOrder .toString(),
+                          id_order:  detailsOrders!.idOrder , action: 3);
+                    },
+
+                  );
+                }),
+          ],
+        );
+
+
+
+      case ItemListType.allfinished:
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+
           ],
         );
     }

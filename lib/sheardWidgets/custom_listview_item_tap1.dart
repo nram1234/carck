@@ -187,11 +187,11 @@ class CustomListViewItemTap1 extends StatelessWidget {
                     width: size.width * .25,
                     title: "تسلبم الطلب",
                     onClick: () {
-                      print("detailsOrders!.idOrder    ${detailsOrders!
+                      print("detailsOrders!.idOrder    ${detailsOrders
                           .idOrder}");
                       logic.getChangeStatusOrder(
-                          updateId: detailsOrders!.idOrder.toString(),
-                          id_order: detailsOrders!.idOrder, action: 2);
+                          updateId: detailsOrders.idOrder.toString(),
+                          id_order: detailsOrders.idOrder, action: 2);
                     },
                     fontWeight: FontWeight.bold,
                     buttonColor: ColorApp.greenColor,
@@ -202,26 +202,31 @@ class CustomListViewItemTap1 extends StatelessWidget {
       case ItemListType.finished:
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [Spacer(),
-            // GetBuilder<HomeViwController>(id: id_order.toString(),
-            //     builder: (logic) {
-            //       return logic.isGetOrderDetails ? Center(
-            //         child: CircularProgressIndicator(),) : CustomButton(
-            //         width: size.width * .25,
-            //         title: "تفاصيل الطلب",
-            //         titleColor: ColorApp.redColor,
-            //         onClick: () {
-            //           logic.getGetOrderDetails(
-            //               itemListType: ItemListType.waiting,
-            //               id_order: id_order,
-            //               size: size,
-            //               context: context,
-            //               updateId: id_order.toString());
-            //         },
-            //         fontWeight: FontWeight.bold,
-            //         buttonColor: Colors.transparent,
-            //       );
-            //     }),
+          children: [
+            GetBuilder<HomeViwController>(id: id_order.toString(),
+                builder: (logic) {
+                  return logic.isGetOrderDetails ? Center(
+                    child: CircularProgressIndicator(),) : CustomButton(
+                    width: size.width * .25,
+                    title: "تم التوصيل",
+                    titleColor: ColorApp.redColor,
+                    onClick: () {
+                      logic.getChangeStatusOrder(
+                          updateId:detailsOrders!.idOrder .toString(),
+                          id_order: detailsOrders!.idOrder , action: 3);
+                    },
+                    fontWeight: FontWeight.bold,
+                    buttonColor: Colors.transparent,
+                  );
+                }),
+          ],
+        );
+
+      case ItemListType.allfinished:
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+
           ],
         );
     }

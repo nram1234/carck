@@ -1031,21 +1031,34 @@ class HomeViwController extends GetxController {
                   return logic.isGetOrderDetails ? Center(
                     child: CircularProgressIndicator(),) : CustomButton(
                     width: size.width * .25,
-                    title: "تفاصيل الطلب",
-                    titleColor: ColorApp.redColor,
+                    title: "تم التوصيل",
+
                     onClick: () {
-                      logic.getGetOrderDetails(itemListType: item,
-                          id_order: id_order,
-                          size: size,
-                          context: context,
-                          updateId: id_order.toString());
+                      logic.getChangeStatusOrder(
+                          updateId: getOrderDetailsModel!.result!
+                              .orderDetails![0].idOrder! .toString(),
+                          id_order: getOrderDetailsModel!.result!
+                              .orderDetails![0].idOrder , action: 3);
                     },
                     fontWeight: FontWeight.bold,
-                    buttonColor: Colors.transparent,
+                    buttonColor: ColorApp.greenColor,
                   );
                 }),
           ],
         );
+
+
+
+      case ItemListType.allfinished:
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+
+          ],
+        );
+
+
+
     }
   }
 
