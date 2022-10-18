@@ -92,15 +92,15 @@ class HomeTap2 extends GetView<HomeViwController> {
                   Directionality(
                     textDirection: TextDirection.rtl,
                     child: Container(
-                        // child:logic.getWaitingOrdersModel==null?Center(child: CircularProgressIndicator(),): ListView.builder(
-                        //     itemCount: logic.getWaitingOrdersModel?.result
-                        //         ?.detailsOrder?.length,
-                        //     itemBuilder: (context, pos) {
-                        //       return CustomListViewItem(
-                        //         itemListType: ItemListType.waiting,
-                        //         detailsOrders: logic.getWaitingOrdersModel!.result!.detailsOrder![pos],
-                        //       );
-                        //     })
+                        child:logic.currentOrders==null?Center(child: CircularProgressIndicator(),): ListView.builder(
+                            itemCount: logic.currentOrders?.result
+                                ?.detailsOrder?.length,
+                            itemBuilder: (context, pos) {
+                              return CustomListViewItem(
+                                itemListType: ItemListType.finished,
+                                detailsOrders: logic.currentOrders!.result!.detailsOrder![pos],
+                              );
+                            })
                     ),
                   ),
                   logic.currentOrders == null
@@ -114,7 +114,8 @@ class HomeTap2 extends GetView<HomeViwController> {
                                   .receivedOrders?.result?.detailsOrder?.length,
                               itemBuilder: (context, pos) {
 
-
+print("receivedOrdersreceivedOrdersreceivedOrders ${ logic
+    .receivedOrders?.result?.detailsOrder?.length}");
                                 return CustomListViewItem(
                                   detailsOrders: logic.receivedOrders!.result!
                                       .detailsOrder![pos],

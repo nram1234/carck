@@ -10,7 +10,7 @@ import '../models/login_model.dart';
 class GetgReceivedOrdersAPI extends ApiManager{
   @override
   String apiUrl() {
-return APIApp.getDeliveredOrdersUrl;
+return APIApp.getReceivedOrdersUrl;
   }
 
   @override

@@ -80,7 +80,24 @@ class CustomListViewItem extends StatelessWidget {
 
               ],
             ),
-            itemType(size: size, item: itemListType, context: context)
+            GetBuilder<HomeViwController>(
+                id: detailsOrders!.idOrder.toString(), builder: (logic) {
+              return logic.isGetOrderDetails ? Center(
+                child: CircularProgressIndicator(),) : CustomButton(
+                width: size.width * .25,
+                title: "تفاصيل الطلب",
+                titleColor: ColorApp.redColor,
+                onClick: () {
+                  logic.getGetOrderDetails(itemListType: itemListType,
+                      updateId: detailsOrders!.idOrder.toString(),
+                      id_order: detailsOrders!.idOrder,
+                      size: size,
+                      context: context);
+                },
+                fontWeight: FontWeight.bold,
+                buttonColor: Colors.transparent,
+              );
+            }),               // itemType(size: size, item: ItemListType.employment, context: context)
           ]),
     );
   }
@@ -96,32 +113,32 @@ class CustomListViewItem extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
 
-              GetBuilder<HomeViwController>(
-                  id: detailsOrders!.idOrder.toString(), builder: (logic) {
-                return logic.isGetOrderDetails ? Center(
-                  child: CircularProgressIndicator(),) : CustomButton(
-                  width: size.width * .25,
-                  title: "تفاصيل الطلب",
-                  onClick: () {
-                    logic.getGetOrderDetails(itemListType: item,
-                        updateId: detailsOrders!.idOrder.toString(),
-                        id_order: detailsOrders!.idOrder,
-                        size: size,
-                        context: context);
-
-
-                    // Get.find<HomeViwController>()
-                    //     .getGetOrderDetails(size: size,
-                    //   context: context,
-                    //   id_order: detailsOrders!.idOrder!,);
-                    // Get.find<HomeViwController>()
-                    //     .customBottomSheet2(size: size );
-                  },
-                  fontWeight: FontWeight.bold,
-                  buttonColor: Colors.transparent,
-                  titleColor: ColorApp.redColor,
-                );
-              }),
+              // GetBuilder<HomeViwController>(
+              //     id: detailsOrders!.idOrder.toString(), builder: (logic) {
+              //   return logic.isGetOrderDetails ? Center(
+              //     child: CircularProgressIndicator(),) : CustomButton(
+              //     width: size.width * .25,
+              //     title: "تفاصيل الطلب",
+              //     onClick: () {
+              //       logic.getGetOrderDetails(itemListType: ItemListType.waiting,
+              //           updateId: detailsOrders!.idOrder.toString(),
+              //           id_order: detailsOrders!.idOrder,
+              //           size: size,
+              //           context: context);
+              //
+              //
+              //       // Get.find<HomeViwController>()
+              //       //     .getGetOrderDetails(size: size,
+              //       //   context: context,
+              //       //   id_order: detailsOrders!.idOrder!,);
+              //       // Get.find<HomeViwController>()
+              //       //     .customBottomSheet2(size: size );
+              //     },
+              //     fontWeight: FontWeight.bold,
+              //     buttonColor: Colors.transparent,
+              //     titleColor: ColorApp.redColor,
+              //   );
+              // }),
               GetBuilder<HomeViwController>(
                   id: detailsOrders!.idOrder.toString(),
                   builder: (logic) {
@@ -164,27 +181,28 @@ class CustomListViewItem extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
+            // GetBuilder<HomeViwController>(
+            //     id: detailsOrders!.idOrder.toString(), builder: (logic) {
+            //   return logic.isGetOrderDetails ? Center(
+            //     child: CircularProgressIndicator(),) : CustomButton(
+            //     width: size.width * .25,
+            //     title: "تم استلام الطلب",
+            //     titleColor: ColorApp.redColor,
+            //     onClick: () {
+            //       logic.getChangeStatusOrder(
+            //
+            //           updateId: detailsOrders!.idOrder.toString(),
+            //           id_order: detailsOrders!.idOrder,
+            //
+            //           action: 2);
+            //     },
+            //     fontWeight: FontWeight.bold,
+            //     buttonColor: Colors.transparent,
+            //   );
+            // }),
             GetBuilder<HomeViwController>(
                 id: detailsOrders!.idOrder.toString(), builder: (logic) {
-              return logic.isGetOrderDetails ? Center(
-                child: CircularProgressIndicator(),) : CustomButton(
-                width: size.width * .25,
-                title: "تفاصيل الطلب",
-                titleColor: ColorApp.redColor,
-                onClick: () {
-                  logic.getGetOrderDetails(itemListType: item,
-                      updateId: detailsOrders!.idOrder.toString(),
-                      id_order: detailsOrders!.idOrder,
-                      size: size,
-                      context: context);
-                },
-                fontWeight: FontWeight.bold,
-                buttonColor: Colors.transparent,
-              );
-            }),
-            GetBuilder<HomeViwController>(
-                id: detailsOrders!.idOrder.toString(), builder: (logic) {
-              return logic.isGetOrderDetails ? Center(
+              return logic.isChangeStatusOrder ? Center(
                 child: CircularProgressIndicator(),) :CustomButton(
                     width: size.width * .25,
                     title: "تسلبم الطلب",
@@ -193,7 +211,7 @@ class CustomListViewItem extends StatelessWidget {
                           .idOrder}");
                       logic.getChangeStatusOrder(
                           updateId: detailsOrders!.idOrder.toString(),
-                          id_order: detailsOrders!.idOrder, action: 1);
+                          id_order: detailsOrders!.idOrder, action: 2);
                     },
                     fontWeight: FontWeight.bold,
                     buttonColor: ColorApp.greenColor,
@@ -205,24 +223,24 @@ class CustomListViewItem extends StatelessWidget {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GetBuilder<HomeViwController>(
-                id: detailsOrders!.idOrder.toString(), builder: (logic) {
-              return logic.isGetOrderDetails ? Center(
-                child: CircularProgressIndicator(),) : CustomButton(
-                width: size.width * .25,
-                title: "تفاصيل الطلب",
-                titleColor: ColorApp.redColor,
-                onClick: () {
-                  logic.getGetOrderDetails(itemListType: item,
-                      updateId: detailsOrders!.idOrder.toString(),
-                      id_order: detailsOrders!.idOrder,
-                      size: size,
-                      context: context);
-                },
-                fontWeight: FontWeight.bold,
-                buttonColor: Colors.transparent,
-              );
-            }),
+            // GetBuilder<HomeViwController>(
+            //     id: detailsOrders!.idOrder.toString(), builder: (logic) {
+            //   return logic.isGetOrderDetails ? Center(
+            //     child: CircularProgressIndicator(),) : CustomButton(
+            //     width: size.width * .25,
+            //     title: "تفاصيل الطلب",
+            //     titleColor: ColorApp.redColor,
+            //     onClick: () {
+            //       logic.getGetOrderDetails(itemListType: item,
+            //           updateId: detailsOrders!.idOrder.toString(),
+            //           id_order: detailsOrders!.idOrder,
+            //           size: size,
+            //           context: context);
+            //     },
+            //     fontWeight: FontWeight.bold,
+            //     buttonColor: Colors.transparent,
+            //   );
+            // }),
           ],
         );
     }

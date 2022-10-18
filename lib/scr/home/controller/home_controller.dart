@@ -140,7 +140,7 @@ class HomeViwController extends GetxController {
   bool isGetOrderDetails = false;
   GetOrderDetailsModel? getOrderDetailsModel;
 
-  getGetOrderDetails({required ItemListType itemListType,required id_order,
+  getGetOrderDetails({required ItemListType itemListType, required id_order,
     required Size size,
     required BuildContext context,
     updateId}) async {
@@ -162,7 +162,8 @@ class HomeViwController extends GetxController {
     a['id_order'] = id_order;
     homeAPI.post(a).then((value) {
       getOrderDetailsModel = value as GetOrderDetailsModel;
-      customBottomSheet(itemListType: itemListType,size: size, context: context);
+      customBottomSheet(
+          itemListType: itemListType, size: size, context: context);
       isGetOrderDetails = false;
       update([updateId]);
       //update();
@@ -247,25 +248,6 @@ class HomeViwController extends GetxController {
   }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // GetDataInfoModel? getDataInfoModel;
   //
   // getDataInfodata() async {
@@ -282,24 +264,6 @@ class HomeViwController extends GetxController {
   //     update();
   //   });
   // }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
   changeSelectedValue(int selectedValue) {
@@ -387,9 +351,9 @@ class HomeViwController extends GetxController {
     a['key'] = '1234567890';
 
     getCurrentOrdersAPI.post(a).then((value) {
-
       currentOrders = value as GetWaitingOrdersModel;
-      print("currentOrderscurrentOrders   ${currentOrders!.result!.detailsOrder!.length}");
+      print("currentOrderscurrentOrders   ${currentOrders!.result!.detailsOrder!
+          .length}");
       update();
     });
   }
@@ -408,7 +372,7 @@ class HomeViwController extends GetxController {
     getgReceivedOrdersAPI.post(a).then((value) {
       receivedOrders = value as GetWaitingOrdersModel;
 
-
+      print("rec  ${ receivedOrders?.result?.detailsOrder?.length}");
       update();
     });
   }
@@ -431,7 +395,7 @@ class HomeViwController extends GetxController {
     a['agent_id'] = SecureStorage.readSecureDataINT(AllStringConst.id);
 
     a['key'] = '1234567890';
-    a['id_order'] = id_order;
+    a['order_id'] = id_order;
     a['status'] = action;
     changeStatusOrderAPI.post(a).then((value) {
       //getWaitingOrders();
@@ -444,7 +408,8 @@ class HomeViwController extends GetxController {
   }
 
 
-  customBottomSheet({required Size size, required context, required ItemListType itemListType}) {
+  customBottomSheet(
+      {required Size size, required context, required ItemListType itemListType}) {
     return showModalBottomSheet(
         isScrollControlled: true,
         enableDrag: true,
@@ -875,11 +840,13 @@ class HomeViwController extends GetxController {
                   ),
 
 
+                  itemType(item: itemListType,
+                      size: size,
+                      context: context,
+                      id_order: getOrderDetailsModel!.result!.orderDetails![0]
+                          .idOrder),
 
 
-                  itemType(item: itemListType,size: size,context: context,id_order: getOrderDetailsModel!.result!.orderDetails![0].idOrder),
-                  
-                  
                   // fromTapNumber==2?    Directionality(
                   //   textDirection: TextDirection.rtl,
                   //   child:
@@ -965,18 +932,25 @@ class HomeViwController extends GetxController {
               //         buttonColor: Colors.transparent,
               //       );
               //     }),
-              CustomButton(
-                width: size.width * .25,
-                title: "قبول الطلب",
-                onClick: () {
+              GetBuilder<HomeViwController>(
+                  id: id_order.toString(),
+                  builder: (logic) {
+                    return logic.isChangeStatusOrder ? Center(
+                      child: CircularProgressIndicator(),) : CustomButton(
+                      width: size.width * .25,
+                      title: "قبول الطلب",
+                      onClick: () {
+                        logic.getChangeStatusOrder(
 
+                            updateId: id_order.toString(),
+                            id_order: id_order,
 
-
-
-                },
-                fontWeight: FontWeight.bold,
-                buttonColor: ColorApp.greenColor,
-              ),
+                            action: 1);
+                      },
+                      fontWeight: FontWeight.bold,
+                      buttonColor: ColorApp.greenColor,
+                    );
+                  }),
               CustomButton(
                 width: size.width * .25,
                 title: "رفض الطلب",
@@ -992,42 +966,79 @@ class HomeViwController extends GetxController {
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GetBuilder<HomeViwController>(id: id_order.toString(),
-                builder: (logic) {
-                  return logic.isGetOrderDetails?Center(child: CircularProgressIndicator(),): CustomButton(
-                    width: size.width * .25,
-                    title: "تفاصيل الطلب",
-                    titleColor: ColorApp.redColor,
-                    onClick: () {
-                      logic.getGetOrderDetails(itemListType: item,
-                          id_order: id_order, size: size, context: context,updateId:id_order.toString());
-                    },
-                    fontWeight: FontWeight.bold,
-                    buttonColor: Colors.transparent,
-                  );
-                }),
-            CustomButton(
-              width: size.width * .25,
-              title: "تسلبم الطلب",
-              onClick: () {},
-              fontWeight: FontWeight.bold,
-              buttonColor: ColorApp.greenColor,
-            ),
+            // GetBuilder<HomeViwController>(id: id_order.toString(),
+            //     builder: (logic) {
+            //       return logic.isGetOrderDetails ? Center(
+            //         child: CircularProgressIndicator(),) : CustomButton(
+            //         width: size.width * .25,
+            //         title: "تفاصيل الطلب",
+            //         titleColor: ColorApp.redColor,
+            //         onClick: () {
+            //           logic.getGetOrderDetails(itemListType: item,
+            //               id_order: id_order,
+            //               size: size,
+            //               context: context,
+            //               updateId: id_order.toString());
+            //         },
+            //         fontWeight: FontWeight.bold,
+            //         buttonColor: Colors.transparent,
+            //       );
+            //     }),
+        // GetBuilder<HomeViwController>(id: id_order.toString(),
+        //     builder: (logic) {
+        //       return logic.isChangeStatusOrder ? Center(
+        //         child: CircularProgressIndicator(),) :
+        //             CustomButton(
+        //             width: size.width * .25,
+        //             title: "تسلبم الطلب",
+        //             onClick: () {
+        //
+        //
+        //             },
+        //             fontWeight: FontWeight.bold,
+        //             buttonColor: ColorApp.greenColor,
+        //           );
+        //         }),
+
+
+            GetBuilder<HomeViwController>(
+                id: getOrderDetailsModel!.result!
+                    .orderDetails![0].idOrder!. toString(), builder: (logic) {
+              return logic.isChangeStatusOrder ? Center(
+                child: CircularProgressIndicator(),) :CustomButton(
+                width: size.width * .25,
+                title: "تسلبم الطلب",
+                onClick: () {
+
+                  logic.getChangeStatusOrder(
+                      updateId: getOrderDetailsModel!.result!
+                          .orderDetails![0].idOrder! .toString(),
+                      id_order: getOrderDetailsModel!.result!
+                          .orderDetails![0].idOrder , action: 2);
+                },
+                fontWeight: FontWeight.bold,
+                buttonColor: ColorApp.greenColor,
+              );
+            }),
           ],
         );
       case ItemListType.finished:
         return Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            GetBuilder<HomeViwController>(id:id_order.toString() ,
+            GetBuilder<HomeViwController>(id: id_order.toString(),
                 builder: (logic) {
-                  return logic.isGetOrderDetails?Center(child: CircularProgressIndicator(),): CustomButton(
+                  return logic.isGetOrderDetails ? Center(
+                    child: CircularProgressIndicator(),) : CustomButton(
                     width: size.width * .25,
                     title: "تفاصيل الطلب",
                     titleColor: ColorApp.redColor,
                     onClick: () {
                       logic.getGetOrderDetails(itemListType: item,
-                          id_order: id_order, size: size, context: context,updateId: id_order.toString());
+                          id_order: id_order,
+                          size: size,
+                          context: context,
+                          updateId: id_order.toString());
                     },
                     fontWeight: FontWeight.bold,
                     buttonColor: Colors.transparent,
@@ -1039,12 +1050,6 @@ class HomeViwController extends GetxController {
   }
 
 
-
-
-
-
-
-
   customBottomSheet2({
     required Size size,
   }) {
@@ -1054,8 +1059,6 @@ class HomeViwController extends GetxController {
       color: Colors.redAccent,
     ));
   }
-
-
 
 
 }

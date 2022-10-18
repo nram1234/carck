@@ -1,5 +1,6 @@
 enum ItemListType {
   waiting,
   employment,
-  finished
+  finished,
+
 }

@@ -125,7 +125,7 @@ class HomeTap1 extends StatelessWidget {
                     itemCount: logic.homeModel?.result?.detailsOrders?.length,
                     itemBuilder: (context, pos) {
                       return CustomListViewItemTap1(
-                        itemListType: ItemListType.waiting,
+                        itemListType: ItemListType.finished,
                         detailsOrders:
                             logic.homeModel!.result!.detailsOrders![pos],
                       );
