@@ -1511,11 +1511,25 @@ class HomeViwController extends GetxController {
                   ),
 
 
-                  itemType(item: itemListType,
-                      size: size,
-                      context: context,
-                      id_order: getOrderUserDetailsModel!.result!.orderDetails![0]
-                          .idOrder),
+                  GetBuilder<HomeViwController>(id: getOrderUserDetailsModel!.result!
+                      .orderDetails![0].idOrder.toString(),
+                      builder: (logic) {
+                        return logic.isGetOrderDetails ? Center(
+                          child: CircularProgressIndicator(),) : CustomButton(
+                          width: size.width * .25,
+                          title: "تم التوصيل",
+
+                          onClick: () {
+                            logic.getChangeStatusOrder(
+                                updateId:  getOrderUserDetailsModel!.result!
+                                    .orderDetails![0].idOrder .toString(),
+                                id_order:  getOrderUserDetailsModel!.result!
+                                    .orderDetails![0].idOrder , action: 3);
+                          },
+                          fontWeight: FontWeight.bold,
+                          buttonColor: ColorApp.greenColor,
+                        );
+                      }),
 
 
                   // fromTapNumber==2?    Directionality(
