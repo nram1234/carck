@@ -88,11 +88,27 @@ class CustomListViewItem extends StatelessWidget {
                 title: "تفاصيل الطلب",
                 titleColor: ColorApp.redColor,
                 onClick: () {
-                  logic.getGetOrderDetails(itemListType: itemListType,
-                      updateId: detailsOrders!.idOrder.toString(),
-                      id_order: detailsOrders!.idOrder,
-                      size: size,
-                      context: context);
+
+if(itemListType==ItemListType.finished){
+  logic.getDrderUserDetails(itemListType: itemListType,
+  updateId: detailsOrders!.idOrder.toString(),
+      id_order: detailsOrders!.idOrder,
+      size: size,
+      context: context);
+}else{
+
+  logic.getGetOrderDetails(itemListType: itemListType,
+      updateId: detailsOrders!.idOrder.toString(),
+      id_order: detailsOrders!.idOrder,
+      size: size,
+      context: context);
+
+}
+
+
+
+
+
                 },
                 fontWeight: FontWeight.bold,
                 buttonColor: Colors.transparent,

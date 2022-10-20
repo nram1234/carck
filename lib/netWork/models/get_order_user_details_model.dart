@@ -1,14 +1,15 @@
 import 'package:carck/netWork/abstract_json_resource.dart';
 
-class GetOrderDetailsModel extends AbstractJsonResource{
+class GetOrderUserDetailsModel extends AbstractJsonResource{
   bool? message;
   int? codenum;
   bool? status;
   Result? result;
 
-  GetOrderDetailsModel({this.message, this.codenum, this.status, this.result});
+  GetOrderUserDetailsModel(
+      {this.message, this.codenum, this.status, this.result});
 
-  GetOrderDetailsModel.fromJson(Map<String, dynamic> json) {
+  GetOrderUserDetailsModel.fromJson(Map<String, dynamic> json) {
     message = json['message'];
     codenum = json['codenum'];
     status = json['status'];
