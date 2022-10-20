@@ -11,6 +11,7 @@ import '../../../netWork/apis/change_status_order_api.dart';
 import '../../../netWork/apis/edit_profile_api.dart';
 import '../../../netWork/apis/get_current_orders_api.dart';
 import '../../../netWork/apis/get_data_info_api.dart';
+import '../../../netWork/apis/get_delivered_orders_api.dart';
 import '../../../netWork/apis/get_order_details_api.dart';
 import '../../../netWork/apis/get_order_user_details_api.dart';
 import '../../../netWork/apis/get_received_orders_api.dart';
@@ -428,7 +429,7 @@ class HomeViwController extends GetxController {
   GetWaitingOrdersModel? receivedOrders;
 
   getReceivedOrders() async {
-    GetgReceivedOrdersAPI getgReceivedOrdersAPI = GetgReceivedOrdersAPI();
+    GetWaitingOrdersAPI getgReceivedOrdersAPI = GetWaitingOrdersAPI();
 
     Map<String, dynamic> a = {};
     a['id_agent'] = SecureStorage.readSecureDataINT(AllStringConst.id);
