@@ -21,5 +21,7 @@ class APIApp {
   static const String getListNotificationsUrl =baseUrl+"delivery/get_list_notifications";
   static const String   getOrderUserDetailsUrl =baseUrl+"delivery/get_order_user_details";
 
+  static const String   getSetLocationUrl =baseUrl+"delivery/set_location";
+
 
 }

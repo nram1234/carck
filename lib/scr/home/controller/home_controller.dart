@@ -28,6 +28,7 @@ import '../../../netWork/models/preparation_profile_model.dart';
 import '../../../sheardWidgets/custom_button.dart';
 import '../../../utility/all_enum_class.dart';
 import '../../../utility/all_string_const.dart';
+import '../../../utility/loc.dart';
 import '../../../utility/storage.dart';
 import '../home_tap2.dart';
 import '../home_tap3.dart';
@@ -71,6 +72,7 @@ class HomeViwController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    LoctionServ.llocationService();
     currentScreen = PageToView(
       naigatorKey: _navigatorKeys[_pageKeys[0]]!,
       tabItem: _pageKeys[0],

@@ -6,23 +6,46 @@ import 'package:location/location.dart';
 class LoctionServ {
 
 
-  UserLocation? userLocation;
-  Location location = Location();
+ static UserLocation? userLocation;
+ static Location location = Location();
 
-  StreamController<UserLocation>loctionController = StreamController<
+ static StreamController<UserLocation>loctionController = StreamController<
       UserLocation>.broadcast();
 
-  Stream<UserLocation> get locationStrem => loctionController.stream;
+ static Stream<UserLocation> get locationStrem => loctionController.stream;
 
-  llocationService() {
-    location.enableBackgroundMode(enable: true);
+ static llocationService()async {
+   bool _serviceEnabled;
+   PermissionStatus _permissionGranted;
+
+
+   // _serviceEnabled = await location.serviceEnabled();
+   // if (!_serviceEnabled) {
+   //   _serviceEnabled = await location.requestService();
+   //   if (!_serviceEnabled) {
+   //     return;
+   //   }
+   // }
+
+   _permissionGranted = await location.hasPermission();
+   if (_permissionGranted == PermissionStatus.denied) {
+     _permissionGranted = await location.requestPermission();
+     if (_permissionGranted != PermissionStatus.granted) {
+       return;
+     }
+   }
+
+
+   // location.enableBackgroundMode(enable: true);
     location.changeSettings(
-        accuracy: LocationAccuracy.high,// distanceFilter: 10
+        accuracy: LocationAccuracy.high,
+        interval: 10000,
+        distanceFilter: 5
     );
-    location.requestPermission().then((value) {
+   // location.requestPermission().then((value) {
       //  PermissionStatus v=value;
 
-      if (value == PermissionStatus.granted) {
+    //  if (value == PermissionStatus.granted) {
         location.onLocationChanged.listen((LocationData currentLocation) {
           loctionController.add(UserLocation(latitude: currentLocation.latitude,
               longitude: currentLocation.longitude));
@@ -33,8 +56,8 @@ Get.snackbar("title", "message");
 
 
         });
-      }
-    });
+    //  }
+   // });
   }
 
 
