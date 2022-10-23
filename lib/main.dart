@@ -10,6 +10,7 @@ import 'middleware/auth_middleware.dart';
 import 'scr/home/binding/Home_binding.dart';
 import 'scr/home/home_scr.dart';
 import 'scr/login_scr/ui/login_scr.dart';
+import 'utility/loc.dart';
 
 
 
@@ -22,15 +23,16 @@ void main() async{
     FirebaseMessaging.instance;
   await GetStorage.init();
 
-  runApp(const MyApp());
+  runApp(  MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
+    MyApp({super.key});
+ // LoctionServ loctionServ=LoctionServ();
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+   // loctionServ.llocationService();
     return GetMaterialApp(
       title: 'Flutter Demo',
       theme: ThemeData(

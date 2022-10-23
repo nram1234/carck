@@ -18,5 +18,8 @@ class PushNotificationManagger {
       _initialized = true;
       return token;
     }
+    else{
+      return _firebaseMessaging.getToken();
+    }
   }
 }

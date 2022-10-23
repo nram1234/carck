@@ -32,36 +32,42 @@ String? nameValidator  (value) {
 
   logIng()async{
 
-    String  firebase_token =
+    var  firebase_token =
   await  PushNotificationManagger().init();
 
   if(formKey.currentState!.validate()){
     islogin=true;
     update();
     LogInAPI logInAPI=LogInAPI();
-    Map <String,dynamic>a={};
-    a['phone']  =phone.text;
-    a['password']  =password.text;
-    a['key']  = '1234567890';
-    a['firebase_token']  = firebase_token;
+    PushNotificationManagger().init().then((value) {
 
-    logInAPI.post(a).then((value) async{
 
-      LogInModel data=value as LogInModel;
+      print("kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk   ${value}");
+      Map <String,dynamic>a={};
+      a['phone']  =phone.text;
+      a['password']  =password.text;
+      a['key']  = '1234567890';
+      a['firebase_token']  = value;
 
-   if(data.status==true){
-      await  SecureStorage.writeSecureDataINT(key: AllStringConst.id , value: data.result!.agentData![0].id!);
-        // await SecureStorage.writeSecureJsonData(
-        //     key:AllStringConst.login ,value: data.toJson());
-        Get.offAllNamed("Home");
-      }else{
+      logInAPI.post(a).then((value) async{
 
-        Get.snackbar("", data.message!);
-      }
-      islogin=false;
-update();
+        LogInModel data=value as LogInModel;
 
-    }) ;
+        if(data.status==true){
+          await  SecureStorage.writeSecureDataINT(key: AllStringConst.id , value: data.result!.agentData![0].id!);
+          // await SecureStorage.writeSecureJsonData(
+          //     key:AllStringConst.login ,value: data.toJson());
+          Get.offAllNamed("Home");
+        }else{
+
+          Get.snackbar("", data.message!);
+        }
+        islogin=false;
+        update();
+
+      }) ;
+    });
+
 
   }
   }
