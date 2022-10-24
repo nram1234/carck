@@ -50,9 +50,9 @@ class LoctionServ {
           loctionController.add(UserLocation(latitude: currentLocation.latitude,
               longitude: currentLocation.longitude));
 
-print("i get allllllllllllllllllllllllllll   ${currentLocation.latitude}=============${currentLocation}");
-
-Get.snackbar("title", "message");
+// print("i get allllllllllllllllllllllllllll   ${currentLocation.latitude}=============${currentLocation}");
+//
+// Get.snackbar("title", "message");
 
 
         });

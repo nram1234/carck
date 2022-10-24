@@ -32,13 +32,17 @@ class HomeTap1 extends StatelessWidget {
                 child: Padding(
                   padding: const EdgeInsets.only(top: 30, left: 25, right: 20),
                   child: Column(children: [
-                    Align(
-                      alignment: Alignment.topLeft,
-                      child: Container(
-                        padding: EdgeInsets.all(8),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle, color: Colors.white),
-                        child: Icon(Icons.notifications_active_outlined),
+                    InkWell(onTap: (){
+                      Get.toNamed("NotificationSCR");
+                    },
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Container(
+                          padding: EdgeInsets.all(8),
+                          decoration: BoxDecoration(
+                              shape: BoxShape.circle, color: Colors.white),
+                          child: Icon(Icons.notifications_active_outlined),
+                        ),
                       ),
                     ),
                     Row(

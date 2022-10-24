@@ -1,4 +1,5 @@
 import 'package:carck/scr/all_binding/login_binding.dart';
+import 'package:carck/scr/notf/notification_scr.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
@@ -65,9 +66,12 @@ class MyApp extends StatelessWidget {
 
 
       ,
-      // GetPage(name: "/HolidayRequest", page: () =>
-      //     HolidayRequestScr(),
-      //     binding: HolidayRequestBinding())
+      GetPage(name: "/NotificationSCR", page: () =>
+          NotificationSCR(),
+         // binding: HolidayRequestBinding()
+    )
+
+
 
     ],
     );
