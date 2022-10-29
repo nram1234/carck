@@ -66,10 +66,20 @@ class LoctionServ {
       var userLoc = await location.getLocation();
       userLocation = UserLocation(
           latitude: userLoc?.latitude, longitude: userLoc?.longitude);
+
     } catch (e) {
       print(e.toString());
     }
   }
+
+
+
+
+  static Future<LocationData?> getCurLoction() async {
+ return await location.getLocation();
+
+
+ }
 
 }
 

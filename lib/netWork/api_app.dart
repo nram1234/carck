@@ -24,4 +24,7 @@ class APIApp {
   static const String   getSetLocationUrl =baseUrl+"delivery/set_location";
 
 
+  static const String   changeStatusProviderOrderUrl =baseUrl+"delivery/change_status_provider_order";
+
+
 }

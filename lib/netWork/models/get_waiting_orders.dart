@@ -61,13 +61,14 @@ class DetailsOrder {
   String? totalPrice;
   String? totalProduct;
   String? date;
+  String? sharevalue;
 
   DetailsOrder(
       {this.codeName,
         this.idOrder,
         this.totalPrice,
         this.totalProduct,
-        this.date});
+        this.date,this.sharevalue});
 
   DetailsOrder.fromJson(Map<String, dynamic> json) {
     codeName = json['code_name'];
@@ -75,6 +76,7 @@ class DetailsOrder {
     totalPrice = json['total_price'];
     totalProduct = json['total_product'];
     date = json['date'];
+    sharevalue = json['share_value'];
   }
 
   Map<String, dynamic> toJson() {
@@ -83,6 +85,7 @@ class DetailsOrder {
     data['id_order'] = this.idOrder;
     data['total_price'] = this.totalPrice;
     data['total_product'] = this.totalProduct;
+
     data['date'] = this.date;
     return data;
   }

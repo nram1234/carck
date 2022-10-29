@@ -124,16 +124,16 @@ print("receivedOrdersreceivedOrdersreceivedOrders ${ logic
                               })
               ,
                   Container(
-                      child: logic.receivedOrders == null
+                      child: logic.deliveredOrder == null
                           ? Center(
                               child: CircularProgressIndicator(),
                             )
                           : ListView.builder(
                               itemCount: logic
-                                  .receivedOrders?.result?.detailsOrder?.length,
+                                  .deliveredOrder?.result?.detailsOrder?.length,
                               itemBuilder: (context, pos) {
                                 return CustomListViewItem(
-                                  detailsOrders: logic.receivedOrders!.result!
+                                  detailsOrders: logic.deliveredOrder!.result!
                                       .detailsOrder![pos],
                                   itemListType: ItemListType.allfinished,
                                 );
