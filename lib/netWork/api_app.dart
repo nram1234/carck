@@ -26,5 +26,7 @@ class APIApp {
 
   static const String   changeStatusProviderOrderUrl =baseUrl+"delivery/change_status_provider_order";
 
+  static const String   myWalletUrl =baseUrl+"delivery/my_wallet";
+
 
 }

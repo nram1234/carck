@@ -114,8 +114,6 @@ class HomeTap2 extends GetView<HomeViwController> {
                                   .receivedOrders?.result?.detailsOrder?.length,
                               itemBuilder: (context, pos) {
 
-print("receivedOrdersreceivedOrdersreceivedOrders ${ logic
-    .receivedOrders?.result?.detailsOrder?.length}");
                                 return CustomListViewItem(
                                   detailsOrders: logic.receivedOrders!.result!
                                       .detailsOrder![pos],

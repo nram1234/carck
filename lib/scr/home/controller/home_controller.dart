@@ -18,6 +18,7 @@ import '../../../netWork/apis/get_order_user_details_api.dart';
 import '../../../netWork/apis/get_received_orders_api.dart';
 import '../../../netWork/apis/get_waiting_orders_api.dart';
 import '../../../netWork/apis/home_api.dart';
+import '../../../netWork/apis/my_wallet_api.dart';
 import '../../../netWork/apis/preparation_profile_api.dart';
 import '../../../netWork/models/edit_profile_model.dart';
 import '../../../netWork/models/get_data_info_model.dart';
@@ -25,6 +26,7 @@ import '../../../netWork/models/get_order_details_model.dart';
 import '../../../netWork/models/get_order_user_details_model.dart';
 import '../../../netWork/models/get_waiting_orders.dart';
 import '../../../netWork/models/home_model.dart';
+import '../../../netWork/models/my_wallet_model.dart';
 import '../../../netWork/models/preparation_profile_model.dart';
 import '../../../sheardWidgets/custom_button.dart';
 import '../../../utility/all_enum_class.dart';
@@ -333,6 +335,9 @@ class HomeViwController extends GetxController {
       getCurrentOrders();
       getdeliveredOrderOrders();
     }
+    if(selectedValue==2){
+      getMyWallet();
+    }
     update();
   }
 
@@ -440,6 +445,44 @@ class HomeViwController extends GetxController {
       update();
     });
   }
+
+
+
+  MyWalletModel? myWalletModel;
+  getMyWallet() async {
+    MyWalletAPI myWalletAPI = MyWalletAPI();
+
+    Map<String, dynamic> a = {};
+    a['id_agent'] = SecureStorage.readSecureDataINT(AllStringConst.id);
+
+    a['key'] = '1234567890';
+
+    myWalletAPI.post(a).then((value) {
+      myWalletModel = value as MyWalletModel;
+print(myWalletModel?.toJson());
+      update();
+    });
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   bool isChangeStatusOrder = false;
@@ -661,6 +704,29 @@ class HomeViwController extends GetxController {
                                         )),
                                   ],
                                 ),
+
+
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Expanded(
+                                        flex: 1,
+                                        child: Text(
+                                          "${getOrderDetailsModel!.result!
+                                              .orderDetails![0].shippingCharges}",
+                                          style: TextStyle(fontSize: 15),
+                                          textAlign: TextAlign.right,
+                                        )),
+                                    Expanded(
+                                        flex: 1,
+                                        child: Text(
+                                          ": تكلفة الشحن",
+                                          style: TextStyle(fontSize: 15),
+                                          textAlign: TextAlign.right,
+                                        )),
+                                  ],
+                                ),
+
                               ]),
                         ),
                       ),

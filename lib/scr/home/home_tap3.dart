@@ -8,7 +8,9 @@ import 'controller/home_controller.dart';
 class HomeTap3 extends GetView<HomeViwController> {
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+    Size size = MediaQuery
+        .of(context)
+        .size;
 
     return SafeArea(
       child: GetBuilder<HomeViwController>(builder: (logic) {
@@ -16,13 +18,17 @@ class HomeTap3 extends GetView<HomeViwController> {
           //appBar: AppBar(backgroundColor: primaryColor,elevation: 0,title: Text("primaryColor")),
           body: Directionality(
             textDirection: TextDirection.rtl,
-            child: Column(children: [
+            child: logic.myWalletModel == null
+                ? Center(
+              child: CircularProgressIndicator(),
+            )
+                : Column(children: [
               Container(
                   height: 100,
                   decoration: BoxDecoration(
                       color: ColorApp.grey.withOpacity(.1),
-                      borderRadius:
-                          BorderRadius.only(bottomLeft: Radius.circular(25))),
+                      borderRadius: BorderRadius.only(
+                          bottomLeft: Radius.circular(25))),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.end,
                     children: [
@@ -62,26 +68,82 @@ class HomeTap3 extends GetView<HomeViwController> {
                           )),
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
-                        child: Column(children: [
-                          Text("الرصيد المتاح",
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w600)),
-                          Spacer(),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            mainAxisAlignment:
+                            MainAxisAlignment.spaceAround,
                             children: [
-                              Text("200",
-                                  style: TextStyle(
-                                      fontSize: 52, color: Colors.white)),
-                              SizedBox(
-                                width: 10,
+                              // Text("الرصيد المتاح",
+                              //     style: TextStyle(
+                              //         fontSize: 16, fontWeight: FontWeight.w600)),
+                              // Spacer(),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.center,
+                              //   children: [
+                              //     Text("200",
+                              //         style: TextStyle(
+                              //             fontSize: 52, color: Colors.white)),
+                              //     SizedBox(
+                              //       width: 10,
+                              //     ),
+                              //     Text("ريال",
+                              //         style: TextStyle(
+                              //             fontSize: 25, color: Colors.white)),
+                              //   ],
+                              // )
+
+                              Row(
+                                children: [
+                                  Text("عدد الطلبات",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white)),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                      "${logic.myWalletModel?.result
+                                          ?.totalOrder}",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white)),
+                                ],
                               ),
-                              Text("ريال",
-                                  style: TextStyle(
-                                      fontSize: 25, color: Colors.white)),
-                            ],
-                          )
-                        ]),
+                              Row(
+                                children: [
+                                  Text("اجمالي العمولة",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white)),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                      "${logic.myWalletModel?.result
+                                          ?.totalCommission}",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white)),
+                                ],
+                              ),
+                              Row(
+                                children: [
+                                  Text("نسبة العمولة",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white)),
+                                  SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(
+                                      "${logic.myWalletModel?.result
+                                          ?.commissionRate}",
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          color: Colors.white)),
+                                ],
+                              )
+                            ]),
                       ),
                     ),
                   ],
@@ -100,7 +162,8 @@ class HomeTap3 extends GetView<HomeViwController> {
                   padding: const EdgeInsets.only(
                       top: 5, right: 20, left: 20, bottom: 5),
                   child: ListView.builder(
-                      itemCount: 100,
+                      itemCount: logic
+                          .myWalletModel?.result?.detailsOrders?.length,
                       itemBuilder: (context, pos) {
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
@@ -113,45 +176,73 @@ class HomeTap3 extends GetView<HomeViwController> {
                                     height: 50,
                                     width: 50,
                                     decoration: BoxDecoration(
-                                        color: ColorApp.grey.withOpacity(.5),
+                                        color:
+                                        ColorApp.grey.withOpacity(.5),
                                         borderRadius:
-                                            BorderRadius.circular(10)),
+                                        BorderRadius.circular(10)),
                                     child: Image.asset("assets/bu.png"),
-                                  ),SizedBox(width: 8,),
+                                  ),
+                                  SizedBox(
+                                    width: 8,
+                                  ),
                                   Expanded(
                                       child: Column(
-                                   crossAxisAlignment: CrossAxisAlignment.start,
-                                    children: [
-                                      Text("تسليم طلب #123456",
-                                          style: TextStyle(fontSize: 14)),
-                                      Text("10-6-2022",
-                                          style: TextStyle(fontSize: 12))
-                                    ],
-                                  ))
-                               ,
-
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                              " تسليم طلب # ${logic
+                                                  .myWalletModel?.result
+                                                  ?.detailsOrders?[pos]
+                                                  .idOrder}",
+                                              style: TextStyle(fontSize: 14)),
+                                          Text(
+                                              "${logic.myWalletModel?.result
+                                                  ?.detailsOrders?[pos].date}",
+                                              style: TextStyle(fontSize: 12))
+                                        ],
+                                      )),
                                   Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
                                     children: [
-                                      RichText(
-                                        text: TextSpan(
-                                         style: TextStyle(color: Colors.black, fontSize: 20),
-                                          children: <TextSpan>[
-                                            TextSpan(text: '30 ', style: TextStyle(color: Colors.black,fontWeight: FontWeight.bold)),
-                                            TextSpan(text: 'ريال ', style: TextStyle(color: Colors.black)),
-
-                                          ],
-                                        ),
-                                        textScaleFactor: 0.5,
-                                      ),
-                                      GestureDetector(onTap: (){
-                                        controller.customBottomSheet(itemListType: ItemListType.finished,size: size, context: context);
-                                      },
+                                      // RichText(
+                                      //   text: TextSpan(
+                                      //     style: TextStyle(
+                                      //         color: Colors.black,
+                                      //         fontSize: 20),
+                                      //     children: <TextSpan>[
+                                      //       TextSpan(
+                                      //           text: '${logic.myWalletModel?.result?.detailsOrders?[pos].} ',
+                                      //           style: TextStyle(
+                                      //               color: Colors.black,
+                                      //               fontWeight:
+                                      //                   FontWeight.bold)),
+                                      //       TextSpan(
+                                      //           text: 'ريال ',
+                                      //           style: TextStyle(
+                                      //               color: Colors.black)),
+                                      //     ],
+                                      //   ),
+                                      //   textScaleFactor: 0.5,
+                                      // ),
+                                      GestureDetector(
+                                        onTap: () {
+                                          controller
+                                              .getGetOrderDetails(
+                                              itemListType: ItemListType.allfinished, id_order:logic.myWalletModel?.result
+                                              ?.detailsOrders?[pos].idOrder,size: size,context: context,updateId:logic.myWalletModel?.result
+                                              ?.detailsOrders?[pos].idOrder.toString() );
+                                        },
                                         child: Text("تفاصيل الطلب",
-                                            style: TextStyle(fontSize: 12,color: ColorApp.primaryColor)),
+                                            style: TextStyle(
+                                                fontSize: 12,
+                                                color: ColorApp
+                                                    .primaryColor)),
                                       )
                                     ],
-                                  )],
+                                  )
+                                ],
                               )),
                         );
                       }),
