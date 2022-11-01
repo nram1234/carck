@@ -12,9 +12,9 @@
     <!-- Include only if your app benefits from precise location access. -->
 
     <application
-        android:label="carck"
+        android:label="Karak cloud delivery"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/launcher_icon"
        android:requestLegacyExternalStorage="true">
         <activity
             android:name=".MainActivity"

@@ -911,7 +911,7 @@ print(myWalletModel?.toJson());
                                                   child: CircularProgressIndicator(),)
                                                     : CustomButton(
                                                   width: size.width * .25,
-                                                  title: "تسلبم الطلب",
+                                                  title: "استلام الطلب",
                                                   onClick: () {
                                                     print(
                                                         "getOrderDetailsModel!.result!.allProducts![i].productStatus    ${getOrderDetailsModel!
@@ -1833,7 +1833,7 @@ print(myWalletModel?.toJson());
               return logic.isChangeStatusOrder ? Center(
                 child: CircularProgressIndicator(),) : CustomButton(
                 width: size.width * .25,
-                title: "تسلبم الطلب",
+                title: "استلام الطلب",
                 onClick: () {
                   logic.getChangeStatusOrder(
                       updateId: getOrderDetailsModel!.result!
