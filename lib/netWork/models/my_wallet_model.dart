@@ -32,8 +32,8 @@ class Result {
   String? currenyName;
   int? totalOrder;
   int? totalPrice;
-  String? totalCommission;
-  String? commissionRate;
+  int? totalCommission;
+  int? commissionRate;
   List<DetailsOrders>? detailsOrders;
 
   Result(
