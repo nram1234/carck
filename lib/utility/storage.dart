@@ -7,7 +7,6 @@ class SecureStorage {
   static final   box = GetStorage();
   static Future? writeSecureDataINT({required String key,required int value})  async {
 
-print("hhhhhhhhhhhh    $key                   $value");
     var writeData = await box.write( key,value);
     return writeData;
   }
